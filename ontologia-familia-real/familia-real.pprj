@@ -1,4 +1,4 @@
-; Sat Jun 14 20:57:05 CEST 2014
+; Sat Jun 14 21:16:15 CEST 2014
 ; 
 ;+ (version "3.5")
 ;+ (build "Build 663")
@@ -6,11 +6,11 @@
 ([BROWSER_SLOT_NAMES] of  Property_List
 
 	(properties
-		[familia-real_ProjectKB_Class2871]
-		[familia-real_ProjectKB_Class2872]
-		[familia-real_ProjectKB_Class2873]
-		[familia-real_ProjectKB_Class2874]
-		[familia-real_ProjectKB_Class2875]))
+		[familia-real_ProjectKB_Class10121]
+		[familia-real_ProjectKB_Class10122]
+		[familia-real_ProjectKB_Class10123]
+		[familia-real_ProjectKB_Class10124]
+		[familia-real_ProjectKB_Class10125]))
 
 ([CLSES_TAB] of  Widget
 
@@ -37,6 +37,31 @@
 
 ([familia-real_ProjectKB_Class10] of  Property_List
 )
+
+([familia-real_ProjectKB_Class10121] of  String
+
+	(name "http://www.w3.org/2002/07/owl#Class")
+	(string_value "%3ANAME"))
+
+([familia-real_ProjectKB_Class10122] of  String
+
+	(name ":INSTANCE-ANNOTATION")
+	(string_value "%3AANNOTATION-TEXT"))
+
+([familia-real_ProjectKB_Class10123] of  String
+
+	(name ":META-CLASS")
+	(string_value "%3ANAME"))
+
+([familia-real_ProjectKB_Class10124] of  String
+
+	(name ":PAL-CONSTRAINT")
+	(string_value "%3APAL-NAME"))
+
+([familia-real_ProjectKB_Class10125] of  String
+
+	(name "http://www.w3.org/2002/07/owl#Thing")
+	(string_value "%3ANAME"))
 
 ([familia-real_ProjectKB_Class11] of  Widget
 
@@ -121,31 +146,6 @@
 
 ([familia-real_ProjectKB_Class28] of  Property_List
 )
-
-([familia-real_ProjectKB_Class2871] of  String
-
-	(name "http://www.w3.org/2002/07/owl#Class")
-	(string_value "%3ANAME"))
-
-([familia-real_ProjectKB_Class2872] of  String
-
-	(name ":INSTANCE-ANNOTATION")
-	(string_value "%3AANNOTATION-TEXT"))
-
-([familia-real_ProjectKB_Class2873] of  String
-
-	(name ":META-CLASS")
-	(string_value "%3ANAME"))
-
-([familia-real_ProjectKB_Class2874] of  String
-
-	(name ":PAL-CONSTRAINT")
-	(string_value "%3APAL-NAME"))
-
-([familia-real_ProjectKB_Class2875] of  String
-
-	(name "http://www.w3.org/2002/07/owl#Thing")
-	(string_value "%3ANAME"))
 
 ([familia-real_ProjectKB_Class29] of  Widget
 
@@ -3281,6 +3281,9 @@
 	(property_list [XY_Instance_195])
 	(widget_class_name "edu.stanford.smi.protegex.owl.ui.widget.OWLFormWidget"))
 
+([KB_841093_Class0] of  Map
+)
+
 ([KB_865583_Instance_10] of  Widget
 
 	(is_hidden TRUE)
@@ -3324,9 +3327,6 @@
 	(widget_class_name "edu.stanford.smi.protegex.owl.ui.widget.OWLFormsTab"))
 
 ([KB_865583_Instance_9] of  Property_List
-)
-
-([KB_865629_Class0] of  Map
 )
 
 ([KB_868747_Instance_76] of  Widget
