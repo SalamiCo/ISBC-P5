@@ -11,11 +11,6 @@
     xmlns="http://www.owl-ontologies.com/familia-real.owl#"
   xml:base="http://www.owl-ontologies.com/familia-real.owl">
   <owl:Ontology rdf:about=""/>
-  <owl:Class rdf:ID="Principe">
-    <rdfs:subClassOf>
-      <owl:Class rdf:ID="Hombre"/>
-    </rdfs:subClassOf>
-  </owl:Class>
   <owl:Class rdf:ID="Hijo">
     <rdfs:subClassOf>
       <owl:Class rdf:ID="Persona"/>
@@ -28,6 +23,11 @@
         <owl:someValuesFrom rdf:resource="#Persona"/>
       </owl:Restriction>
     </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:ID="Principe">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Hombre"/>
+    </rdfs:subClassOf>
   </owl:Class>
   <owl:Class rdf:ID="Abuelo">
     <owl:equivalentClass>
@@ -98,6 +98,11 @@
   <owl:Class rdf:about="#Hombre">
     <rdfs:subClassOf rdf:resource="#Persona"/>
   </owl:Class>
+  <owl:Class rdf:ID="SalgaRey">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Foto"/>
+    </rdfs:subClassOf>
+  </owl:Class>
   <owl:Class rdf:ID="Mujer">
     <rdfs:subClassOf rdf:resource="#Persona"/>
   </owl:Class>
@@ -157,6 +162,9 @@
     </owl:equivalentClass>
     <rdfs:subClassOf rdf:resource="#Persona"/>
   </owl:Class>
+  <owl:Class rdf:ID="Familiar">
+    <rdfs:subClassOf rdf:resource="#Foto"/>
+  </owl:Class>
   <owl:Class rdf:ID="Nieto">
     <owl:equivalentClass>
       <owl:Restriction>
@@ -167,6 +175,9 @@
       </owl:Restriction>
     </owl:equivalentClass>
     <rdfs:subClassOf rdf:resource="#Persona"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Romantica">
+    <rdfs:subClassOf rdf:resource="#Foto"/>
   </owl:Class>
   <owl:Class rdf:ID="NietosRey">
     <owl:equivalentClass>
@@ -195,6 +206,9 @@
     </owl:equivalentClass>
     <rdfs:subClassOf rdf:resource="#Persona"/>
   </owl:Class>
+  <owl:Class rdf:ID="Trabajo">
+    <rdfs:subClassOf rdf:resource="#Foto"/>
+  </owl:Class>
   <owl:Class rdf:ID="Yerno">
     <owl:equivalentClass>
       <owl:Restriction>
@@ -221,6 +235,9 @@
         </owl:intersectionOf>
       </owl:Class>
     </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:ID="SalgaHermano">
+    <rdfs:subClassOf rdf:resource="#Foto"/>
   </owl:Class>
   <owl:Class rdf:ID="Abuela">
     <rdfs:subClassOf rdf:resource="#Persona"/>
