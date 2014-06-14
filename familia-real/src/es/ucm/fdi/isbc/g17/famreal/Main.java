@@ -3,9 +3,11 @@ package es.ucm.fdi.isbc.g17.famreal;
 import java.util.Collections;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.ProgressMonitor;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
+import javax.swing.UIManager;
 
 import es.ucm.fdi.gaia.ontobridge.OntoBridge;
 import es.ucm.fdi.gaia.ontobridge.OntologyDocument;
@@ -15,7 +17,9 @@ public final class Main {
     private static JFrame frame;
     private static ProgressMonitor progress;
 
-    public static void main (String[] args) throws InterruptedException {
+    public static void main (String[] args) throws Exception {
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        
         SwingUtilities.invokeLater(new Runnable() {
             public void run () {
                 preLoadOntology();
@@ -38,11 +42,8 @@ public final class Main {
     }
 
     private static void preLoadOntology () {
-        frame = new JFrame();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
         
-        progress = new ProgressMonitor(frame, "Cargando Ontología...", "", 0, 100);
+        progress = new ProgressMonitor(null, "Cargando Ontología...", "", 0, 100);
         progress.setMillisToDecideToPopup(0);
         progress.setMillisToPopup(0);
         progress.setProgress(0);
@@ -65,7 +66,12 @@ public final class Main {
     protected static void postLoadOntology (OntoBridge ob) {
         progress.setProgress(100);
         progress.close();
-        frame.dispose();
+        
+        frame = new JFrame();
+        frame.add(new JLabel("== PENE =="));
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 
 }
