@@ -12,21 +12,25 @@ import es.ucm.fdi.gaia.ontobridge.OntologyDocument;
 
 public final class Main {
 
+    private static JFrame frame;
     private static ProgressMonitor progress;
 
-    public static void main (String[] args) {
+    public static void main (String[] args) throws InterruptedException {
         SwingUtilities.invokeLater(new Runnable() {
             public void run () {
                 preLoadOntology();
-                new SwingWorker<Void, Void>() {
+                new SwingWorker<OntoBridge, Void>() {
                     @Override
-                    protected Void doInBackground () throws Exception {
-                        loadOntology();
-                        return null;
+                    protected OntoBridge doInBackground () throws Exception {
+                        return loadOntology();
                     }
 
                     protected void done () {
-                        postLoadOntology();
+                        try {
+                            postLoadOntology(get());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 }.execute();
             }
@@ -34,27 +38,34 @@ public final class Main {
     }
 
     private static void preLoadOntology () {
-        JFrame frame = new JFrame();
+        frame = new JFrame();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
         
-        
-        progress = new ProgressMonitor(frame, "Cargando Ontología...", "", 0, 1);
-        progress.setMillisToDecideToPopup(100);
-        progress.setMillisToPopup(1000);
+        progress = new ProgressMonitor(frame, "Cargando Ontología...", "", 0, 100);
+        progress.setMillisToDecideToPopup(0);
+        progress.setMillisToPopup(0);
         progress.setProgress(0);
     }
 
-    protected static void loadOntology () {
+    protected static OntoBridge loadOntology () {
         OntoBridge ob = new OntoBridge();
         ob.initWithPelletReasoner();
 
+        progress.setProgress(10);
         OntologyDocument mainOnto = new OntologyDocument(Main.class.getResource("/familia-real.owl").toString(), null);
 
+        progress.setProgress(20);
         ob.loadOntology(mainOnto, Collections.<OntologyDocument> emptyList(), false);
+
+        progress.setProgress(90);
+        return ob;
     }
 
-    protected static void postLoadOntology () {
-        progress.setProgress(1);
+    protected static void postLoadOntology (OntoBridge ob) {
+        progress.setProgress(100);
         progress.close();
+        frame.dispose();
     }
 
 }
