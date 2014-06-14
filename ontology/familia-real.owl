@@ -1,0 +1,159 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:protege="http://protege.stanford.edu/plugins/owl/protege#"
+    xmlns:xsp="http://www.owl-ontologies.com/2005/08/07/xsp.owl#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:swrl="http://www.w3.org/2003/11/swrl#"
+    xmlns:swrlb="http://www.w3.org/2003/11/swrlb#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns="http://www.owl-ontologies.com/familia-real.owl#"
+  xml:base="http://www.owl-ontologies.com/familia-real.owl">
+  <owl:Ontology rdf:about=""/>
+  <owl:Class rdf:ID="Padre">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Persona"/>
+    </rdfs:subClassOf>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="esProgenitor"/>
+        </owl:onProperty>
+        <owl:someValuesFrom>
+          <owl:Class>
+            <owl:intersectionOf rdf:parseType="Collection">
+              <owl:Class rdf:about="#Persona"/>
+              <owl:Restriction>
+                <owl:someValuesFrom rdf:resource="#Persona"/>
+                <owl:onProperty>
+                  <owl:ObjectProperty rdf:ID="esHijo"/>
+                </owl:onProperty>
+              </owl:Restriction>
+            </owl:intersectionOf>
+          </owl:Class>
+        </owl:someValuesFrom>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Yerno">
+    <rdfs:subClassOf rdf:resource="#Persona"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Abuelo">
+    <rdfs:subClassOf rdf:resource="#Persona"/>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:someValuesFrom>
+          <owl:Class>
+            <owl:intersectionOf rdf:parseType="Collection">
+              <owl:Class rdf:about="#Persona"/>
+              <owl:Restriction>
+                <owl:onProperty>
+                  <owl:ObjectProperty rdf:about="#esProgenitor"/>
+                </owl:onProperty>
+                <owl:someValuesFrom rdf:resource="#Persona"/>
+              </owl:Restriction>
+            </owl:intersectionOf>
+          </owl:Class>
+        </owl:someValuesFrom>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#esProgenitor"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Cuñado">
+    <rdfs:subClassOf rdf:resource="#Persona"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Primo">
+    <rdfs:subClassOf rdf:resource="#Persona"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Abuela">
+    <rdfs:subClassOf rdf:resource="#Persona"/>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#esProgenitor"/>
+        </owl:onProperty>
+        <owl:someValuesFrom>
+          <owl:Class>
+            <owl:intersectionOf rdf:parseType="Collection">
+              <owl:Class rdf:about="#Persona"/>
+              <owl:Restriction>
+                <owl:onProperty>
+                  <owl:ObjectProperty rdf:about="#esProgenitor"/>
+                </owl:onProperty>
+                <owl:someValuesFrom rdf:resource="#Persona"/>
+              </owl:Restriction>
+            </owl:intersectionOf>
+          </owl:Class>
+        </owl:someValuesFrom>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Prima">
+    <rdfs:subClassOf rdf:resource="#Persona"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Madre">
+    <rdfs:subClassOf rdf:resource="#Persona"/>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#esProgenitor"/>
+        </owl:onProperty>
+        <owl:someValuesFrom>
+          <owl:Class>
+            <owl:intersectionOf rdf:parseType="Collection">
+              <owl:Class rdf:about="#Persona"/>
+              <owl:Restriction>
+                <owl:someValuesFrom rdf:resource="#Persona"/>
+                <owl:onProperty>
+                  <owl:ObjectProperty rdf:about="#esHijo"/>
+                </owl:onProperty>
+              </owl:Restriction>
+            </owl:intersectionOf>
+          </owl:Class>
+        </owl:someValuesFrom>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:Class rdf:ID="Nieto">
+    <rdfs:subClassOf rdf:resource="#Persona"/>
+    <rdfs:subClassOf>
+      <owl:Restriction>
+        <owl:someValuesFrom>
+          <owl:Class>
+            <owl:intersectionOf rdf:parseType="Collection">
+              <owl:Class rdf:about="#Persona"/>
+              <owl:Restriction>
+                <owl:someValuesFrom rdf:resource="#Persona"/>
+                <owl:onProperty>
+                  <owl:ObjectProperty rdf:about="#esHijo"/>
+                </owl:onProperty>
+              </owl:Restriction>
+            </owl:intersectionOf>
+          </owl:Class>
+        </owl:someValuesFrom>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#esHijo"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </rdfs:subClassOf>
+  </owl:Class>
+  <owl:ObjectProperty rdf:ID="divorciadoDe"/>
+  <owl:ObjectProperty rdf:about="#esProgenitor">
+    <rdfs:range rdf:resource="#Persona"/>
+    <rdfs:domain rdf:resource="#Persona"/>
+    <owl:inverseOf>
+      <owl:ObjectProperty rdf:about="#esHijo"/>
+    </owl:inverseOf>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="casadoCon"/>
+  <owl:ObjectProperty rdf:about="#esHijo">
+    <owl:inverseOf rdf:resource="#esProgenitor"/>
+    <rdfs:domain rdf:resource="#Persona"/>
+    <rdfs:range rdf:resource="#Persona"/>
+  </owl:ObjectProperty>
+</rdf:RDF>
+
+<!-- Created with Protege (with OWL Plugin 3.5, Build 663)  http://protege.stanford.edu -->
