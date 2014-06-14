@@ -1,0 +1,137 @@
+<HTML>
+<BODY BGCOLOR="white">
+<PRE>
+<FONT color="green">001</FONT>    package es.ucm.fdi.gaia.ontobridge.test;<a name="line.1"></a>
+<FONT color="green">002</FONT>    <a name="line.2"></a>
+<FONT color="green">003</FONT>    import java.util.ArrayList;<a name="line.3"></a>
+<FONT color="green">004</FONT>    <a name="line.4"></a>
+<FONT color="green">005</FONT>    import com.hp.hpl.jena.rdf.model.Model;<a name="line.5"></a>
+<FONT color="green">006</FONT>    <a name="line.6"></a>
+<FONT color="green">007</FONT>    import es.ucm.fdi.gaia.ontobridge.OntoBridge;<a name="line.7"></a>
+<FONT color="green">008</FONT>    import es.ucm.fdi.gaia.ontobridge.OntologyDocument;<a name="line.8"></a>
+<FONT color="green">009</FONT>    import es.ucm.fdi.gaia.ontobridge.SPARQL;<a name="line.9"></a>
+<FONT color="green">010</FONT>    <a name="line.10"></a>
+<FONT color="green">011</FONT>    /**<a name="line.11"></a>
+<FONT color="green">012</FONT>     * File used for testing the SPARQL class using the restaurants ontology.<a name="line.12"></a>
+<FONT color="green">013</FONT>     * <a name="line.13"></a>
+<FONT color="green">014</FONT>     * @author Antonio A. Sánchez Ruiz-Granados<a name="line.14"></a>
+<FONT color="green">015</FONT>     */<a name="line.15"></a>
+<FONT color="green">016</FONT>    public class Test7 {<a name="line.16"></a>
+<FONT color="green">017</FONT>    <a name="line.17"></a>
+<FONT color="green">018</FONT>            public static void main(String args[]) {<a name="line.18"></a>
+<FONT color="green">019</FONT>                    OntoBridge ob = new OntoBridge();<a name="line.19"></a>
+<FONT color="green">020</FONT>                    ob.initWithPelletReasoner();<a name="line.20"></a>
+<FONT color="green">021</FONT>    <a name="line.21"></a>
+<FONT color="green">022</FONT>                    OntologyDocument mainOnto = new OntologyDocument("http://gaia.fdi.ucm.es/ontologies/restaurant.owl","file:test/restaurant.owl");<a name="line.22"></a>
+<FONT color="green">023</FONT>                    <a name="line.23"></a>
+<FONT color="green">024</FONT>                    ArrayList&lt;OntologyDocument&gt; subOntologies = new ArrayList&lt;OntologyDocument&gt;();<a name="line.24"></a>
+<FONT color="green">025</FONT>                    subOntologies.add(new OntologyDocument("http://gaia.fdi.ucm.es/ontologies/calendar.owl","file:test/calendar.owl"));<a name="line.25"></a>
+<FONT color="green">026</FONT>                    subOntologies.add(new OntologyDocument("http://gaia.fdi.ucm.es/ontologies/price.owl","file:test/price.owl"));<a name="line.26"></a>
+<FONT color="green">027</FONT>                    subOntologies.add(new OntologyDocument("http://gaia.fdi.ucm.es/ontologies/address.owl","file:test/address.owl"));<a name="line.27"></a>
+<FONT color="green">028</FONT>                    subOntologies.add(new OntologyDocument("http://gaia.fdi.ucm.es/ontologies/contact-details.owl","file:test/contact-details.owl"));<a name="line.28"></a>
+<FONT color="green">029</FONT>                    <a name="line.29"></a>
+<FONT color="green">030</FONT>                    ob.loadOntology(mainOnto, subOntologies, false);<a name="line.30"></a>
+<FONT color="green">031</FONT>                    <a name="line.31"></a>
+<FONT color="green">032</FONT>                    SPARQL sparql = new SPARQL(ob);<a name="line.32"></a>
+<FONT color="green">033</FONT>                                                    <a name="line.33"></a>
+<FONT color="green">034</FONT>                    System.out.println();<a name="line.34"></a>
+<FONT color="green">035</FONT>                    System.out.println("SPARQL SELECT query: subclasses of Cuisine");<a name="line.35"></a>
+<FONT color="green">036</FONT>                    String query1 = <a name="line.36"></a>
+<FONT color="green">037</FONT>                            "PREFIX ro: &lt;http://gaia.fdi.ucm.es/ontologies/restaurant.owl#&gt; " +<a name="line.37"></a>
+<FONT color="green">038</FONT>                            "PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; " +<a name="line.38"></a>
+<FONT color="green">039</FONT>                            "SELECT DISTINCT ?a " +<a name="line.39"></a>
+<FONT color="green">040</FONT>                            "WHERE { ?a rdfs:subClassOf ro:Cuisine } " + <a name="line.40"></a>
+<FONT color="green">041</FONT>                            "ORDER BY ?a";<a name="line.41"></a>
+<FONT color="green">042</FONT>                    sparql.execSelectQueryAndPrint(query1, System.out);<a name="line.42"></a>
+<FONT color="green">043</FONT>                    <a name="line.43"></a>
+<FONT color="green">044</FONT>                    System.out.println();<a name="line.44"></a>
+<FONT color="green">045</FONT>                    System.out.println("SPARQL ASQ query: are there any instances with name 'restaurant1'?");<a name="line.45"></a>
+<FONT color="green">046</FONT>                    String query2 = <a name="line.46"></a>
+<FONT color="green">047</FONT>                            "PREFIX ro: &lt;http://gaia.fdi.ucm.es/ontologies/restaurant.owl#&gt; " +<a name="line.47"></a>
+<FONT color="green">048</FONT>                            "ASK { ?a ro:name \"restaurant1\" }";<a name="line.48"></a>
+<FONT color="green">049</FONT>                    System.out.println(sparql.execAskQuery(query2));<a name="line.49"></a>
+<FONT color="green">050</FONT>                    <a name="line.50"></a>
+<FONT color="green">051</FONT>                    System.out.println();<a name="line.51"></a>
+<FONT color="green">052</FONT>                    System.out.println("SPARQL CONSTRUCT query: new model with the instances of Restaurant");<a name="line.52"></a>
+<FONT color="green">053</FONT>                    String query3 = <a name="line.53"></a>
+<FONT color="green">054</FONT>                            "PREFIX ro: &lt;http://gaia.fdi.ucm.es/ontologies/restaurant.owl#&gt; " +<a name="line.54"></a>
+<FONT color="green">055</FONT>                            "PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; " +<a name="line.55"></a>
+<FONT color="green">056</FONT>                            "CONSTRUCT { ?a rdf:type ro:Cuisine } " +<a name="line.56"></a>
+<FONT color="green">057</FONT>                            "WHERE { ?a rdf:type ro:Restaurant }";<a name="line.57"></a>
+<FONT color="green">058</FONT>                    Model m3 = sparql.execConstructQuery(query3);<a name="line.58"></a>
+<FONT color="green">059</FONT>                    m3.write(System.out, /*"N-TRIPLE"*/ "RDF/XML-ABBREV");<a name="line.59"></a>
+<FONT color="green">060</FONT>                    <a name="line.60"></a>
+<FONT color="green">061</FONT>                    System.out.println();<a name="line.61"></a>
+<FONT color="green">062</FONT>                    System.out.println("SPARQL DESCRIBE query: new model with a description of the instances of Restaurant");<a name="line.62"></a>
+<FONT color="green">063</FONT>                    String query4 = <a name="line.63"></a>
+<FONT color="green">064</FONT>                            "PREFIX ro: &lt;http://gaia.fdi.ucm.es/ontologies/restaurant.owl#&gt; " +<a name="line.64"></a>
+<FONT color="green">065</FONT>                            "PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; " +<a name="line.65"></a>
+<FONT color="green">066</FONT>                            "DESCRIBE ?a " +<a name="line.66"></a>
+<FONT color="green">067</FONT>                            "WHERE { ?a rdf:type ro:Restaurant }";<a name="line.67"></a>
+<FONT color="green">068</FONT>                    Model m4 = sparql.execDescribeQuery(query4);;<a name="line.68"></a>
+<FONT color="green">069</FONT>                    m4.write(System.out, /*"N-TRIPLE"*/ "RDF/XML-ABBREV");          <a name="line.69"></a>
+<FONT color="green">070</FONT>            }<a name="line.70"></a>
+<FONT color="green">071</FONT>    }<a name="line.71"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</PRE>
+</BODY>
+</HTML>
