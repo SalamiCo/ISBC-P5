@@ -329,6 +329,14 @@
   </owl:Class>
   <owl:Class rdf:ID="URL"/>
   <owl:Class rdf:ID="SalgaElRey">
+    <owl:equivalentClass>
+      <owl:Restriction>
+        <owl:someValuesFrom rdf:resource="#Rey"/>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:ID="aparece"/>
+        </owl:onProperty>
+      </owl:Restriction>
+    </owl:equivalentClass>
     <rdfs:subClassOf rdf:resource="#Foto"/>
   </owl:Class>
   <owl:ObjectProperty rdf:about="#esProgenitor">
@@ -338,7 +346,7 @@
       <owl:ObjectProperty rdf:about="#esHijo"/>
     </owl:inverseOf>
   </owl:ObjectProperty>
-  <owl:ObjectProperty rdf:ID="aparece">
+  <owl:ObjectProperty rdf:about="#aparece">
     <rdfs:range rdf:resource="#Persona"/>
     <rdfs:domain rdf:resource="#Foto"/>
   </owl:ObjectProperty>
