@@ -98,6 +98,11 @@
   <owl:Class rdf:about="#Hombre">
     <rdfs:subClassOf rdf:resource="#Persona"/>
   </owl:Class>
+  <owl:Class rdf:ID="SalgaRey">
+    <rdfs:subClassOf>
+      <owl:Class rdf:ID="Foto"/>
+    </rdfs:subClassOf>
+  </owl:Class>
   <owl:Class rdf:ID="Mujer">
     <rdfs:subClassOf rdf:resource="#Persona"/>
   </owl:Class>
@@ -157,6 +162,9 @@
     </owl:equivalentClass>
     <rdfs:subClassOf rdf:resource="#Persona"/>
   </owl:Class>
+  <owl:Class rdf:ID="Familiar">
+    <rdfs:subClassOf rdf:resource="#Foto"/>
+  </owl:Class>
   <owl:Class rdf:ID="Nieto">
     <owl:equivalentClass>
       <owl:Restriction>
@@ -167,6 +175,9 @@
       </owl:Restriction>
     </owl:equivalentClass>
     <rdfs:subClassOf rdf:resource="#Persona"/>
+  </owl:Class>
+  <owl:Class rdf:ID="Romantica">
+    <rdfs:subClassOf rdf:resource="#Foto"/>
   </owl:Class>
   <owl:Class rdf:ID="NietosRey">
     <owl:equivalentClass>
@@ -195,6 +206,9 @@
     </owl:equivalentClass>
     <rdfs:subClassOf rdf:resource="#Persona"/>
   </owl:Class>
+  <owl:Class rdf:ID="Trabajo">
+    <rdfs:subClassOf rdf:resource="#Foto"/>
+  </owl:Class>
   <owl:Class rdf:ID="Yerno">
     <owl:equivalentClass>
       <owl:Restriction>
@@ -221,6 +235,9 @@
         </owl:intersectionOf>
       </owl:Class>
     </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:ID="SalgaHermano">
+    <rdfs:subClassOf rdf:resource="#Foto"/>
   </owl:Class>
   <owl:Class rdf:ID="Abuela">
     <rdfs:subClassOf rdf:resource="#Persona"/>
@@ -343,127 +360,208 @@
     <rdfs:range rdf:resource="#Persona"/>
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
   </owl:ObjectProperty>
-  <Hombre rdf:ID="Marichalar">
-    <esProgenitor>
-      <Hombre rdf:ID="Froilán">
-        <esHijo rdf:resource="#Marichalar"/>
-        <esHijo>
-          <Mujer rdf:ID="Elena">
-            <esProgenitor rdf:resource="#Froilán"/>
+  <owl:DatatypeProperty rdf:ID="urlfoto"/>
+  <Foto rdf:ID="foto4">
+    <aparece>
+      <Mujer rdf:ID="ReinaSofia">
+        <casadoCon>
+          <Rey rdf:ID="ReyJuanCarlos">
+            <casadoCon rdf:resource="#ReinaSofia"/>
             <esProgenitor>
-              <Mujer rdf:ID="Victoria">
-                <hermanoDe rdf:resource="#Froilán"/>
-                <esHijo rdf:resource="#Marichalar"/>
-                <esHijo rdf:resource="#Elena"/>
-              </Mujer>
-            </esProgenitor>
-            <esHijo>
-              <Rey rdf:ID="ReyJuanCarlos">
-                <casadoCon>
-                  <Mujer rdf:ID="ReinaSofia">
-                    <casadoCon rdf:resource="#ReyJuanCarlos"/>
+              <Principe rdf:ID="Felipe">
+                <hermanoDe>
+                  <Mujer rdf:ID="Cristina">
+                    <hermanoDe rdf:resource="#Felipe"/>
                     <esProgenitor>
-                      <Principe rdf:ID="Felipe">
+                      <Hombre rdf:ID="Miguel">
                         <hermanoDe>
-                          <Mujer rdf:ID="Cristina">
-                            <hermanoDe rdf:resource="#Felipe"/>
-                            <esProgenitor>
-                              <Hombre rdf:ID="Miguel">
+                          <Hombre rdf:ID="JuanValentín">
+                            <hermanoDe rdf:resource="#Miguel"/>
+                            <hermanoDe>
+                              <Hombre rdf:ID="PabloNicolás">
+                                <hermanoDe rdf:resource="#JuanValentín"/>
+                                <hermanoDe rdf:resource="#Miguel"/>
                                 <hermanoDe>
-                                  <Hombre rdf:ID="JuanValentín">
-                                    <hermanoDe rdf:resource="#Miguel"/>
-                                    <hermanoDe>
-                                      <Hombre rdf:ID="PabloNicolás">
-                                        <hermanoDe rdf:resource="#JuanValentín"/>
-                                        <hermanoDe rdf:resource="#Miguel"/>
-                                        <hermanoDe>
-                                          <Mujer rdf:ID="Irene">
-                                            <esHijo rdf:resource="#Cristina"/>
-                                            <esHijo>
-                                              <Hombre rdf:ID="Urdangarín">
-                                                <casadoCon rdf:resource="#Cristina"/>
-                                                <esProgenitor rdf:resource="#Irene"/>
-                                                <esProgenitor rdf:resource="#Miguel"/>
-                                                <esProgenitor rdf:resource="#JuanValentín"/>
-                                                <esProgenitor rdf:resource="#PabloNicolás"/>
-                                              </Hombre>
-                                            </esHijo>
-                                            <hermanoDe rdf:resource="#JuanValentín"/>
-                                            <hermanoDe rdf:resource="#Miguel"/>
-                                            <hermanoDe rdf:resource="#PabloNicolás"/>
-                                          </Mujer>
-                                        </hermanoDe>
-                                        <esHijo rdf:resource="#Cristina"/>
-                                        <esHijo rdf:resource="#Urdangarín"/>
-                                      </Hombre>
-                                    </hermanoDe>
-                                    <hermanoDe rdf:resource="#Irene"/>
+                                  <Mujer rdf:ID="Irene">
                                     <esHijo rdf:resource="#Cristina"/>
-                                    <esHijo rdf:resource="#Urdangarín"/>
-                                  </Hombre>
+                                    <esHijo>
+                                      <Hombre rdf:ID="Urdangarín">
+                                        <casadoCon rdf:resource="#Cristina"/>
+                                        <esProgenitor rdf:resource="#Irene"/>
+                                        <esProgenitor rdf:resource="#Miguel"/>
+                                        <esProgenitor rdf:resource="#JuanValentín"/>
+                                        <esProgenitor rdf:resource="#PabloNicolás"/>
+                                      </Hombre>
+                                    </esHijo>
+                                    <hermanoDe rdf:resource="#JuanValentín"/>
+                                    <hermanoDe rdf:resource="#Miguel"/>
+                                    <hermanoDe rdf:resource="#PabloNicolás"/>
+                                  </Mujer>
                                 </hermanoDe>
-                                <hermanoDe rdf:resource="#PabloNicolás"/>
-                                <hermanoDe rdf:resource="#Irene"/>
                                 <esHijo rdf:resource="#Cristina"/>
                                 <esHijo rdf:resource="#Urdangarín"/>
                               </Hombre>
-                            </esProgenitor>
-                            <esHijo rdf:resource="#ReinaSofia"/>
-                            <esHijo rdf:resource="#ReyJuanCarlos"/>
-                            <esProgenitor rdf:resource="#PabloNicolás"/>
-                            <esProgenitor rdf:resource="#Irene"/>
-                            <casadoCon rdf:resource="#Urdangarín"/>
-                            <esProgenitor rdf:resource="#JuanValentín"/>
-                            <hermanoDe rdf:resource="#Elena"/>
-                          </Mujer>
+                            </hermanoDe>
+                            <hermanoDe rdf:resource="#Irene"/>
+                            <esHijo rdf:resource="#Cristina"/>
+                            <esHijo rdf:resource="#Urdangarín"/>
+                          </Hombre>
                         </hermanoDe>
-                        <hermanoDe rdf:resource="#Elena"/>
-                        <casadoCon>
-                          <Mujer rdf:ID="Letizia">
-                            <casadoCon rdf:resource="#Felipe"/>
-                            <esProgenitor>
-                              <Mujer rdf:ID="Leonor">
-                                <esHijo rdf:resource="#Felipe"/>
-                                <esHijo rdf:resource="#Letizia"/>
-                                <hermanoDe>
-                                  <Mujer rdf:ID="InfantaSofia">
-                                    <hermanoDe rdf:resource="#Leonor"/>
-                                    <esHijo rdf:resource="#Felipe"/>
-                                    <esHijo rdf:resource="#Letizia"/>
+                        <hermanoDe rdf:resource="#PabloNicolás"/>
+                        <hermanoDe rdf:resource="#Irene"/>
+                        <esHijo rdf:resource="#Cristina"/>
+                        <esHijo rdf:resource="#Urdangarín"/>
+                      </Hombre>
+                    </esProgenitor>
+                    <esHijo rdf:resource="#ReinaSofia"/>
+                    <esHijo rdf:resource="#ReyJuanCarlos"/>
+                    <esProgenitor rdf:resource="#PabloNicolás"/>
+                    <esProgenitor rdf:resource="#Irene"/>
+                    <casadoCon rdf:resource="#Urdangarín"/>
+                    <esProgenitor rdf:resource="#JuanValentín"/>
+                    <hermanoDe>
+                      <Mujer rdf:ID="Elena">
+                        <esProgenitor>
+                          <Hombre rdf:ID="Froilán">
+                            <esHijo>
+                              <Hombre rdf:ID="Marichalar">
+                                <esProgenitor rdf:resource="#Froilán"/>
+                                <esProgenitor>
+                                  <Mujer rdf:ID="Victoria">
+                                    <hermanoDe rdf:resource="#Froilán"/>
+                                    <esHijo rdf:resource="#Marichalar"/>
+                                    <esHijo rdf:resource="#Elena"/>
                                   </Mujer>
-                                </hermanoDe>
-                              </Mujer>
-                            </esProgenitor>
-                            <esProgenitor rdf:resource="#InfantaSofia"/>
-                          </Mujer>
-                        </casadoCon>
+                                </esProgenitor>
+                                <divorciadoDe rdf:resource="#Elena"/>
+                              </Hombre>
+                            </esHijo>
+                            <esHijo rdf:resource="#Elena"/>
+                            <hermanoDe rdf:resource="#Victoria"/>
+                          </Hombre>
+                        </esProgenitor>
+                        <esProgenitor rdf:resource="#Victoria"/>
                         <esHijo rdf:resource="#ReyJuanCarlos"/>
                         <esHijo rdf:resource="#ReinaSofia"/>
-                        <esProgenitor rdf:resource="#Leonor"/>
-                        <esProgenitor rdf:resource="#InfantaSofia"/>
-                      </Principe>
+                        <hermanoDe rdf:resource="#Felipe"/>
+                        <hermanoDe rdf:resource="#Cristina"/>
+                        <divorciadoDe rdf:resource="#Marichalar"/>
+                      </Mujer>
+                    </hermanoDe>
+                  </Mujer>
+                </hermanoDe>
+                <hermanoDe rdf:resource="#Elena"/>
+                <casadoCon>
+                  <Mujer rdf:ID="Letizia">
+                    <casadoCon rdf:resource="#Felipe"/>
+                    <esProgenitor>
+                      <Mujer rdf:ID="Leonor">
+                        <esHijo rdf:resource="#Felipe"/>
+                        <esHijo rdf:resource="#Letizia"/>
+                        <hermanoDe>
+                          <Mujer rdf:ID="InfantaSofia">
+                            <hermanoDe rdf:resource="#Leonor"/>
+                            <esHijo rdf:resource="#Felipe"/>
+                            <esHijo rdf:resource="#Letizia"/>
+                          </Mujer>
+                        </hermanoDe>
+                      </Mujer>
                     </esProgenitor>
-                    <esProgenitor rdf:resource="#Cristina"/>
-                    <esProgenitor rdf:resource="#Elena"/>
+                    <esProgenitor rdf:resource="#InfantaSofia"/>
                   </Mujer>
                 </casadoCon>
-                <esProgenitor rdf:resource="#Felipe"/>
-                <esProgenitor rdf:resource="#Cristina"/>
-                <esProgenitor rdf:resource="#Elena"/>
-              </Rey>
-            </esHijo>
-            <esHijo rdf:resource="#ReinaSofia"/>
-            <hermanoDe rdf:resource="#Felipe"/>
-            <hermanoDe rdf:resource="#Cristina"/>
-            <divorciadoDe rdf:resource="#Marichalar"/>
-          </Mujer>
-        </esHijo>
-        <hermanoDe rdf:resource="#Victoria"/>
-      </Hombre>
-    </esProgenitor>
-    <esProgenitor rdf:resource="#Victoria"/>
-    <divorciadoDe rdf:resource="#Elena"/>
-  </Hombre>
+                <esHijo rdf:resource="#ReyJuanCarlos"/>
+                <esHijo rdf:resource="#ReinaSofia"/>
+                <esProgenitor rdf:resource="#Leonor"/>
+                <esProgenitor rdf:resource="#InfantaSofia"/>
+              </Principe>
+            </esProgenitor>
+            <esProgenitor rdf:resource="#Cristina"/>
+            <esProgenitor rdf:resource="#Elena"/>
+          </Rey>
+        </casadoCon>
+        <esProgenitor rdf:resource="#Felipe"/>
+        <esProgenitor rdf:resource="#Cristina"/>
+        <esProgenitor rdf:resource="#Elena"/>
+      </Mujer>
+    </aparece>
+    <aparece rdf:resource="#Letizia"/>
+    <aparece rdf:resource="#Leonor"/>
+    <aparece rdf:resource="#InfantaSofia"/>
+    <aparece rdf:resource="#ReyJuanCarlos"/>
+    <aparece rdf:resource="#Felipe"/>
+  </Foto>
+  <Foto rdf:ID="foto20"/>
+  <Foto rdf:ID="foto15"/>
+  <Foto rdf:ID="foto3">
+    <aparece rdf:resource="#ReinaSofia"/>
+    <aparece rdf:resource="#Letizia"/>
+    <aparece rdf:resource="#Elena"/>
+    <aparece rdf:resource="#Cristina"/>
+    <aparece rdf:resource="#Urdangarín"/>
+    <aparece rdf:resource="#ReyJuanCarlos"/>
+    <aparece rdf:resource="#Felipe"/>
+  </Foto>
+  <Foto rdf:ID="foto16"/>
+  <owl:AnnotationProperty rdf:ID="aparece">
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+  </owl:AnnotationProperty>
+  <Foto rdf:ID="foto6"/>
+  <Foto rdf:ID="foto13"/>
+  <Foto rdf:ID="foto7"/>
+  <Foto rdf:ID="foto5">
+    <aparece rdf:resource="#Letizia"/>
+    <aparece rdf:resource="#Leonor"/>
+    <aparece rdf:resource="#InfantaSofia"/>
+    <aparece rdf:resource="#Felipe"/>
+  </Foto>
+  <Foto rdf:ID="foto14"/>
+  <Foto rdf:ID="foto10"/>
+  <Foto rdf:ID="foto9"/>
+  <Foto rdf:ID="foto19"/>
+  <Foto rdf:ID="foto23"/>
+  <Foto rdf:ID="foto8"/>
+  <Foto rdf:ID="foto22"/>
+  <Foto rdf:ID="foto12"/>
+  <Foto rdf:ID="foto2">
+    <aparece rdf:resource="#Irene"/>
+    <aparece rdf:resource="#Leonor"/>
+    <aparece rdf:resource="#ReyJuanCarlos"/>
+    <aparece rdf:resource="#ReinaSofia"/>
+    <aparece rdf:resource="#Victoria"/>
+    <aparece rdf:resource="#Urdangarín"/>
+    <aparece rdf:resource="#JuanValentín"/>
+    <aparece rdf:resource="#Miguel"/>
+    <aparece rdf:resource="#Elena"/>
+    <aparece rdf:resource="#Letizia"/>
+    <aparece rdf:resource="#Cristina"/>
+    <aparece rdf:resource="#PabloNicolás"/>
+    <aparece rdf:resource="#InfantaSofia"/>
+    <aparece rdf:resource="#Froilán"/>
+    <aparece rdf:resource="#Felipe"/>
+  </Foto>
+  <Foto rdf:ID="foto17"/>
+  <Foto rdf:ID="foto21"/>
+  <Foto rdf:ID="foto11"/>
+  <Foto rdf:ID="foto1">
+    <aparece rdf:resource="#JuanValentín"/>
+    <aparece rdf:resource="#InfantaSofia"/>
+    <aparece rdf:resource="#Miguel"/>
+    <aparece rdf:resource="#Letizia"/>
+    <aparece rdf:resource="#Leonor"/>
+    <aparece rdf:resource="#ReinaSofia"/>
+    <aparece rdf:resource="#Marichalar"/>
+    <aparece rdf:resource="#Cristina"/>
+    <aparece rdf:resource="#PabloNicolás"/>
+    <aparece rdf:resource="#Froilán"/>
+    <aparece rdf:resource="#Felipe"/>
+    <aparece rdf:resource="#Irene"/>
+    <aparece rdf:resource="#Elena"/>
+    <aparece rdf:resource="#ReyJuanCarlos"/>
+    <aparece rdf:resource="#Victoria"/>
+    <aparece rdf:resource="#Urdangarín"/>
+  </Foto>
+  <Foto rdf:ID="foto18"/>
 </rdf:RDF>
 
 <!-- Created with Protege (with OWL Plugin 3.5, Build 663)  http://protege.stanford.edu -->
