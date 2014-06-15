@@ -19,18 +19,22 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.DefaultListModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
 import javax.swing.JTabbedPane;
 import javax.swing.JTree;
+import javax.swing.ListModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -71,6 +75,8 @@ public final class FamiliaRealFrame extends JFrame {
     /* List of photos to show */
     private final List<String> photoNamesTag = new ArrayList<String>();
     private int photoCurrentTag = 0;
+
+    private JList<Object> listTagged;
 
     public FamiliaRealFrame () {
         setTitle("ISBC Grupo 17 - Práctica 5");
@@ -116,6 +122,7 @@ public final class FamiliaRealFrame extends JFrame {
         setContentPane(panel);
         pack();
         setLocationRelativeTo(null);
+        setExtendedState(getExtendedState() | JFrame.MAXIMIZED_BOTH);
     }
 
     private JTree setupOntologyTree () {
@@ -171,15 +178,51 @@ public final class FamiliaRealFrame extends JFrame {
 
     private JPanel setupTaggingPanel () {
         for (Iterator<String> it = ontoBridge.listInstances("Foto"); it.hasNext();) {
-            photoNamesTag.add(findPhotoName(it.next()));
+            photoNamesTag.add(it.next());
         }
         Collections.sort(photoNamesTag);
-        
+
+        /* Tagged list */
+        listTagged = new JList<>();
+
+        /* Combo box for people */
+        List<String> people = new ArrayList<>();
+        for (Iterator<String> it = ontoBridge.listInstances("Persona"); it.hasNext();) {
+            people.add(extractName(it.next()));
+        }
+        Collections.sort(people);
+        final JComboBox<String> comboPeople = new JComboBox<String>(people.toArray(new String[people.size()]));
+
+        /* Tag button */
+        JButton buttonTag = new JButton("Marcar");
+        buttonTag.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed (ActionEvent arg0) {
+                String photo = photoNamesTag.get(photoCurrentTag);
+                String person = comboPeople.getSelectedItem().toString();
+
+                System.out.printf("$ %s aparece %s%n", photo, person);
+                ontoBridge.createOntProperty(photo, "aparece", person);
+
+                updateInterface();
+            }
+        });
+
+        /* Setup the tagging panel */
+        Box subcolumn = Box.createVerticalBox();
+        subcolumn.add(comboPeople);
+        subcolumn.add(buttonTag);
+
+        JPanel column = new JPanel(new BorderLayout());
+        column.add(listTagged, BorderLayout.CENTER);
+        column.add(subcolumn, BorderLayout.PAGE_END);
+
         /* Create the photo label */
         labelPhotoTag = new JLabel();
 
         /* Create the photo slider */
         sliderPhotoTag = new JSlider();
+        sliderPhotoTag.setValue(0);
         sliderPhotoTag.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged (ChangeEvent arg0) {
@@ -190,8 +233,8 @@ public final class FamiliaRealFrame extends JFrame {
 
         /* Fill the panel */
         JPanel panel = new JPanel(new BorderLayout());
-        // panel.add(row, BorderLayout.PAGE_START);
-        panel.add(labelPhotoTag, BorderLayout.CENTER);
+        panel.add(column, BorderLayout.LINE_END);
+        panel.add(new JScrollPane(labelPhotoTag), BorderLayout.CENTER);
         panel.add(sliderPhotoTag, BorderLayout.PAGE_END);
         return panel;
     }
@@ -231,7 +274,7 @@ public final class FamiliaRealFrame extends JFrame {
         /* Fill the panel */
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(row, BorderLayout.PAGE_START);
-        panel.add(labelPhotoSearch, BorderLayout.CENTER);
+        panel.add(new JScrollPane(labelPhotoSearch), BorderLayout.CENTER);
         panel.add(sliderPhotoSearch, BorderLayout.PAGE_END);
         return panel;
     }
@@ -282,6 +325,16 @@ public final class FamiliaRealFrame extends JFrame {
             sliderPhotoSearch.setValue(0);
             sliderPhotoSearch.setEnabled(false);
         }
+
+        /* Load current people */
+        DefaultListModel<Object> photoPeople = new DefaultListModel<Object>();
+        String photo = photoNamesTag.get(photoCurrentTag);
+        for (Iterator<String> it = ontoBridge.listPropertyValue(photo, "aparece"); it.hasNext();) {
+            String person = extractName(it.next());
+            photoPeople.addElement(person);
+        }
+
+        listTagged.setModel(photoPeople);
     }
 
     private Icon loadPhotoIcon (String photoName) {
@@ -290,7 +343,7 @@ public final class FamiliaRealFrame extends JFrame {
         }
 
         try {
-            String photoPath = "/photos/" + extractName(photoName);
+            String photoPath = "/photos/" + extractName(findPhotoName(photoName));
             URL photoUrl = FamiliaRealFrame.class.getResource(photoPath);
 
             System.out.printf("Photo %s -> %s -> %s%n", photoName, photoPath, photoUrl);
@@ -336,8 +389,7 @@ public final class FamiliaRealFrame extends JFrame {
         for (Iterator<String> it = ontoBridge.listInstances(query); it.hasNext();) {
             String instance = extractName(it.next());
 
-            String photoName = findPhotoName(instance);
-            photoNamesSearch.add(photoName);
+            photoNamesSearch.add(instance);
             System.out.println(instance);
         }
 
