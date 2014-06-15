@@ -2,6 +2,7 @@ package es.ucm.fdi.isbc.g17.famreal;
 
 import java.awt.BorderLayout;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -70,7 +71,7 @@ public final class FamiliaRealFrame extends JFrame {
         /* Get the names of the available searches */
         List<String> queries = obtainQueryNames();
         JComboBox comboQueries = new JComboBox(queries.toArray());
-        
+
         panel.add(comboQueries);
 
         return panel;
@@ -80,11 +81,14 @@ public final class FamiliaRealFrame extends JFrame {
         List<String> queries = new ArrayList<String>();
 
         for (Iterator<String> it = ontoBridge.listSubClasses("Foto", false); it.hasNext();) {
-            String query = it.next();
-            System.out.println(query);
-            queries.add(query.substring(query.lastIndexOf("#")));
+            String name = it.next();
+            String query = name.substring(name.lastIndexOf("#") + 1);
+            if (!("Nothing").equals(query)) {
+                queries.add(query);
+            }
         }
 
+        Collections.sort(queries);
         return queries;
     }
 }
