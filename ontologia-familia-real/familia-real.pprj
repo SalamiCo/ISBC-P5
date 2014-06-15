@@ -1,4 +1,4 @@
-; Sun Jun 15 10:02:23 CEST 2014
+; Sun Jun 15 10:43:10 CEST 2014
 ; 
 ;+ (version "3.5")
 ;+ (build "Build 663")
@@ -6,11 +6,11 @@
 ([BROWSER_SLOT_NAMES] of  Property_List
 
 	(properties
-		[familia-real_ProjectKB_Class120]
-		[familia-real_ProjectKB_Class121]
-		[familia-real_ProjectKB_Class122]
-		[familia-real_ProjectKB_Class123]
-		[familia-real_ProjectKB_Class124]))
+		[familia-real_ProjectKB_Class10121]
+		[familia-real_ProjectKB_Class10122]
+		[familia-real_ProjectKB_Class10123]
+		[familia-real_ProjectKB_Class10124]
+		[familia-real_ProjectKB_Class10125]))
 
 ([CLSES_TAB] of  Widget
 
@@ -38,6 +38,31 @@
 ([familia-real_ProjectKB_Class10] of  Property_List
 )
 
+([familia-real_ProjectKB_Class10121] of  String
+
+	(name "http://www.w3.org/2002/07/owl#Class")
+	(string_value "%3ANAME"))
+
+([familia-real_ProjectKB_Class10122] of  String
+
+	(name ":INSTANCE-ANNOTATION")
+	(string_value "%3AANNOTATION-TEXT"))
+
+([familia-real_ProjectKB_Class10123] of  String
+
+	(name ":META-CLASS")
+	(string_value "%3ANAME"))
+
+([familia-real_ProjectKB_Class10124] of  String
+
+	(name ":PAL-CONSTRAINT")
+	(string_value "%3APAL-NAME"))
+
+([familia-real_ProjectKB_Class10125] of  String
+
+	(name "http://www.w3.org/2002/07/owl#Thing")
+	(string_value "%3ANAME"))
+
 ([familia-real_ProjectKB_Class11] of  Widget
 
 	(is_hidden TRUE)
@@ -46,31 +71,6 @@
 
 ([familia-real_ProjectKB_Class12] of  Property_List
 )
-
-([familia-real_ProjectKB_Class120] of  String
-
-	(name "http://www.w3.org/2002/07/owl#Class")
-	(string_value "%3ANAME"))
-
-([familia-real_ProjectKB_Class121] of  String
-
-	(name ":INSTANCE-ANNOTATION")
-	(string_value "%3AANNOTATION-TEXT"))
-
-([familia-real_ProjectKB_Class122] of  String
-
-	(name ":META-CLASS")
-	(string_value "%3ANAME"))
-
-([familia-real_ProjectKB_Class123] of  String
-
-	(name ":PAL-CONSTRAINT")
-	(string_value "%3APAL-NAME"))
-
-([familia-real_ProjectKB_Class124] of  String
-
-	(name "http://www.w3.org/2002/07/owl#Thing")
-	(string_value "%3ANAME"))
 
 ([familia-real_ProjectKB_Class13] of  Widget
 
@@ -1212,9 +1212,6 @@
 	(property_list [KB_635552_Instance_9]))
 
 ([KB_635552_Instance_9] of  Property_List
-)
-
-([KB_654343_Class0] of  Map
 )
 
 ([KB_691299_Instance_398] of  Widget
@@ -3283,6 +3280,9 @@
 	(name "http://www.w3.org/2002/07/owl#Ontology")
 	(property_list [XY_Instance_195])
 	(widget_class_name "edu.stanford.smi.protegex.owl.ui.widget.OWLFormWidget"))
+
+([KB_800813_Class0] of  Map
+)
 
 ([KB_865583_Instance_10] of  Widget
 
