@@ -1,4 +1,4 @@
-; Sun Jun 15 02:05:51 CEST 2014
+; Sun Jun 15 02:51:08 CEST 2014
 ; 
 ;+ (version "3.5")
 ;+ (build "Build 663")
@@ -6,11 +6,11 @@
 ([BROWSER_SLOT_NAMES] of  Property_List
 
 	(properties
-		[familia-real_ProjectKB_Class347]
-		[familia-real_ProjectKB_Class348]
-		[familia-real_ProjectKB_Class349]
-		[familia-real_ProjectKB_Class350]
-		[familia-real_ProjectKB_Class351]))
+		[familia-real_ProjectKB_Class352]
+		[familia-real_ProjectKB_Class353]
+		[familia-real_ProjectKB_Class354]
+		[familia-real_ProjectKB_Class355]
+		[familia-real_ProjectKB_Class356]))
 
 ([CLSES_TAB] of  Widget
 
@@ -155,33 +155,33 @@
 ([familia-real_ProjectKB_Class34] of  Property_List
 )
 
-([familia-real_ProjectKB_Class347] of  String
-
-	(name ":INSTANCE-ANNOTATION")
-	(string_value "%3AANNOTATION-TEXT"))
-
-([familia-real_ProjectKB_Class348] of  String
-
-	(name "http://www.w3.org/2002/07/owl#Class")
-	(string_value "%3ANAME"))
-
-([familia-real_ProjectKB_Class349] of  String
-
-	(name ":PAL-CONSTRAINT")
-	(string_value "%3APAL-NAME"))
-
 ([familia-real_ProjectKB_Class35] of  Widget
 
 	(is_hidden TRUE)
 	(property_list [familia-real_ProjectKB_Class36])
 	(widget_class_name "org.protege.owl.axiome.ui.AxiomeTab"))
 
-([familia-real_ProjectKB_Class350] of  String
+([familia-real_ProjectKB_Class352] of  String
+
+	(name ":INSTANCE-ANNOTATION")
+	(string_value "%3AANNOTATION-TEXT"))
+
+([familia-real_ProjectKB_Class353] of  String
+
+	(name "http://www.w3.org/2002/07/owl#Class")
+	(string_value "%3ANAME"))
+
+([familia-real_ProjectKB_Class354] of  String
+
+	(name ":PAL-CONSTRAINT")
+	(string_value "%3APAL-NAME"))
+
+([familia-real_ProjectKB_Class355] of  String
 
 	(name ":META-CLASS")
 	(string_value "%3ANAME"))
 
-([familia-real_ProjectKB_Class351] of  String
+([familia-real_ProjectKB_Class356] of  String
 
 	(name "http://www.w3.org/2002/07/owl#Thing")
 	(string_value "%3ANAME"))
