@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -25,8 +26,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
+import javax.swing.JSlider;
 import javax.swing.JTabbedPane;
 import javax.swing.JTree;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreePath;
@@ -50,6 +54,7 @@ public final class FamiliaRealFrame extends JFrame {
     private JComboBox comboQueries;
     private JTree treeOntology;
     private JLabel labelPhoto;
+    private JSlider sliderPhoto;
 
     /* List of photos to show */
     private List<String> photoNames = new ArrayList<String>();
@@ -119,27 +124,35 @@ public final class FamiliaRealFrame extends JFrame {
             }
         });
 
-        tree.getModel().getRoot();
+        System.out.println("Generating Class Tree...");
 
+        tree.getModel().getRoot();
         for (Iterator<String> rc = ontoBridge.listRootClasses(); rc.hasNext();) {
             DefaultMutableTreeNode node = createNode(rc.next(), ontoBridge, 0);
             root.add(node);
         }
         tree.expandRow(0);
 
+        System.out.println();
         return tree;
     }
 
     private DefaultMutableTreeNode createNode (String nodeName, OntoBridge ob, int depth) {
-        DefaultMutableTreeNode node = new DefaultMutableTreeNode(ob.getShortName(nodeName));
+        for (int i = 0; i < depth; i++) {
+            System.out.print("  ");
+        }
+        System.out.println("> " + extractName(nodeName));
+
+        DefaultMutableTreeNode node = new DefaultMutableTreeNode(extractName(nodeName));
         // if(depth > maxdepth)
         // return node;
 
         Iterator<String> subClasses = ob.listSubClasses(nodeName, true);
         while (subClasses.hasNext()) {
             String subClassName = ob.getShortName(subClasses.next());
-            if (!subClassName.equals("owl:Nothing"))
+            if (!subClassName.equals("owl:Nothing")) {
                 node.add(createNode(subClassName, ob, depth + 1));
+            }
         }
 
         return node;
@@ -171,14 +184,25 @@ public final class FamiliaRealFrame extends JFrame {
         /* Create the photo label */
         labelPhoto = new JLabel();
 
+        /* Create the photo slider */
+        sliderPhoto = new JSlider();
+        sliderPhoto.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged (ChangeEvent arg0) {
+                photoCurrent = sliderPhoto.getValue() - 1;
+                updateInterface();
+            }
+        });
+
         /* Fill the panel */
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(row, BorderLayout.PAGE_START);
         panel.add(labelPhoto, BorderLayout.CENTER);
+        panel.add(sliderPhoto, BorderLayout.PAGE_END);
         return panel;
     }
 
-    private void updateInterface () {
+    /* package */void updateInterface () {
         if (photoCurrent >= photoNames.size()) {
             photoCurrent = photoNames.size() - 1;
         }
@@ -193,13 +217,34 @@ public final class FamiliaRealFrame extends JFrame {
             String photoName = photoNames.get(photoCurrent);
             labelPhoto.setIcon(loadPhotoIcon(photoName));
         }
+
+        if (photoNames.size() > 1) {
+            sliderPhoto.setMinimum(1);
+            sliderPhoto.setMaximum(photoNames.size());
+            sliderPhoto.setValue(photoCurrent + 1);
+            sliderPhoto.setEnabled(true);
+
+        } else {
+            sliderPhoto.setMinimum(0);
+            sliderPhoto.setMaximum(0);
+            sliderPhoto.setValue(0);
+            sliderPhoto.setEnabled(false);
+        }
     }
 
     private Icon loadPhotoIcon (String photoName) {
         try {
-            String photoPath = "/photos/" + photoName;
-            Image photoImage = ImageIO.read(FamiliaRealFrame.class.getResource(photoPath));
-            return new ImageIcon(photoImage);
+            String photoPath = "/photos/" + extractName(photoName);
+            URL photoUrl = FamiliaRealFrame.class.getResource(photoPath);
+
+            System.out.printf("Photo %s -> %s -> %s%n", photoName, photoPath, photoUrl);
+
+            if (photoUrl == null) {
+                return new ImageIcon();
+            } else {
+                Image photoImage = ImageIO.read(photoUrl);
+                return new ImageIcon(photoImage);
+            }
 
         } catch (IOException exc) {
             exc.printStackTrace();
@@ -213,7 +258,7 @@ public final class FamiliaRealFrame extends JFrame {
         for (Iterator<String> it = ontoBridge.listSubClasses("Foto", false); it.hasNext();) {
             String query = extractName(it.next());
             // Special case, class "Nothing", which is not ours
-            if (!("Nothing").equals(query)) {
+            if (!("owl:Nothing").equals(query)) {
                 queries.add(query);
             }
         }
@@ -238,23 +283,27 @@ public final class FamiliaRealFrame extends JFrame {
         }
 
         Collections.sort(photoNames);
+        updateInterface();
     }
 
     private String findPhotoName (String instance) {
         System.out.printf("Finding photo name (URL) for '%s'...%n", instance);
-        
-        for (Iterator<String> it = ontoBridge.listInstanceProperties(instance); it.hasNext();) {
-            System.out.println(it.next());
+
+        for (Iterator<String> it = ontoBridge.listPropertyValue(instance, "tieneURL"); it.hasNext();) {
+            String photoName = it.next();
+            System.out.printf("%s -> %s%n", instance, photoName);
+            return photoName;
         }
-        
+
+        System.out.printf("%s -> NOT FOUND%n", instance);
         return "";
     }
 
-
-    private static String extractName (String name) {
-        return name.substring(name.lastIndexOf("#") + 1);
+    private String extractName (String name) {
+        return ontoBridge.getShortName(name);// name.substring(name.lastIndexOf("#")
+                                             // + 1);
     }
-    
+
     /**
      * Cell renderer for the ontology tree.
      * 
