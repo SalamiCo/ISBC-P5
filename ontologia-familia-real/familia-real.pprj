@@ -1,4 +1,4 @@
-; Sun Jun 15 10:43:10 CEST 2014
+; Sun Jun 15 11:32:35 CEST 2014
 ; 
 ;+ (version "3.5")
 ;+ (build "Build 663")
@@ -6,11 +6,11 @@
 ([BROWSER_SLOT_NAMES] of  Property_List
 
 	(properties
-		[familia-real_ProjectKB_Class10121]
-		[familia-real_ProjectKB_Class10122]
-		[familia-real_ProjectKB_Class10123]
-		[familia-real_ProjectKB_Class10124]
-		[familia-real_ProjectKB_Class10125]))
+		[familia-real_ProjectKB_Class10153]
+		[familia-real_ProjectKB_Class10154]
+		[familia-real_ProjectKB_Class10155]
+		[familia-real_ProjectKB_Class10156]
+		[familia-real_ProjectKB_Class10157]))
 
 ([CLSES_TAB] of  Widget
 
@@ -38,27 +38,27 @@
 ([familia-real_ProjectKB_Class10] of  Property_List
 )
 
-([familia-real_ProjectKB_Class10121] of  String
+([familia-real_ProjectKB_Class10153] of  String
 
 	(name "http://www.w3.org/2002/07/owl#Class")
 	(string_value "%3ANAME"))
 
-([familia-real_ProjectKB_Class10122] of  String
+([familia-real_ProjectKB_Class10154] of  String
 
 	(name ":INSTANCE-ANNOTATION")
 	(string_value "%3AANNOTATION-TEXT"))
 
-([familia-real_ProjectKB_Class10123] of  String
+([familia-real_ProjectKB_Class10155] of  String
 
 	(name ":META-CLASS")
 	(string_value "%3ANAME"))
 
-([familia-real_ProjectKB_Class10124] of  String
+([familia-real_ProjectKB_Class10156] of  String
 
 	(name ":PAL-CONSTRAINT")
 	(string_value "%3APAL-NAME"))
 
-([familia-real_ProjectKB_Class10125] of  String
+([familia-real_ProjectKB_Class10157] of  String
 
 	(name "http://www.w3.org/2002/07/owl#Thing")
 	(string_value "%3ANAME"))
