@@ -3,21 +3,25 @@ package es.ucm.fdi.isbc.g17.famreal;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.FlowLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
@@ -45,6 +49,11 @@ public final class FamiliaRealFrame extends JFrame {
     /* Stored components */
     private JComboBox comboQueries;
     private JTree treeOntology;
+    private JLabel labelPhoto;
+
+    /* List of photos to show */
+    private List<String> photoNames = new ArrayList<String>();
+    private int photoCurrent = 0;
 
     public FamiliaRealFrame () {
         setTitle("ISBC Grupo 17 - Práctica 5");
@@ -63,6 +72,7 @@ public final class FamiliaRealFrame extends JFrame {
         this.ontoBridge = ontoBridge;
 
         setupInterface();
+        updateInterface();
     }
 
     private void setupInterface () {
@@ -158,18 +168,50 @@ public final class FamiliaRealFrame extends JFrame {
         row.add(comboQueries);
         row.add(buttonSearch);
 
+        /* Create the photo label */
+        labelPhoto = new JLabel();
+
         /* Fill the panel */
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(row, BorderLayout.PAGE_START);
+        panel.add(labelPhoto, BorderLayout.CENTER);
         return panel;
+    }
+
+    private void updateInterface () {
+        if (photoCurrent >= photoNames.size()) {
+            photoCurrent = photoNames.size() - 1;
+        }
+        if (photoCurrent < 0) {
+            photoCurrent = 0;
+        }
+
+        if (photoNames.isEmpty()) {
+            labelPhoto.setIcon(null);
+
+        } else {
+            String photoName = photoNames.get(photoCurrent);
+            labelPhoto.setIcon(loadPhotoIcon(photoName));
+        }
+    }
+
+    private Icon loadPhotoIcon (String photoName) {
+        try {
+            String photoPath = "/photos/" + photoName;
+            Image photoImage = ImageIO.read(FamiliaRealFrame.class.getResource(photoPath));
+            return new ImageIcon(photoImage);
+
+        } catch (IOException exc) {
+            exc.printStackTrace();
+            return null;
+        }
     }
 
     private List<String> obtainQueryNames () {
         List<String> queries = new ArrayList<String>();
 
         for (Iterator<String> it = ontoBridge.listSubClasses("Foto", false); it.hasNext();) {
-            String name = it.next();
-            String query = name.substring(name.lastIndexOf("#") + 1);
+            String query = extractName(it.next());
             // Special case, class "Nothing", which is not ours
             if (!("Nothing").equals(query)) {
                 queries.add(query);
@@ -181,13 +223,38 @@ public final class FamiliaRealFrame extends JFrame {
     }
 
     /* package */void performSearch () {
+        photoNames.clear();
+        photoCurrent = 0;
+
         String query = comboQueries.getSelectedItem().toString();
+        System.out.printf("Finding photos for '%s'...%n", query);
 
         for (Iterator<String> it = ontoBridge.listInstances(query); it.hasNext();) {
-            System.out.println(it.next());
+            String instance = extractName(it.next());
+
+            String photoName = findPhotoName(instance);
+            photoNames.add(photoName);
+            System.out.println(instance);
         }
+
+        Collections.sort(photoNames);
     }
 
+    private String findPhotoName (String instance) {
+        System.out.printf("Finding photo name (URL) for '%s'...%n", instance);
+        
+        for (Iterator<String> it = ontoBridge.listInstanceProperties(instance); it.hasNext();) {
+            System.out.println(it.next());
+        }
+        
+        return "";
+    }
+
+
+    private static String extractName (String name) {
+        return name.substring(name.lastIndexOf("#") + 1);
+    }
+    
     /**
      * Cell renderer for the ontology tree.
      * 
