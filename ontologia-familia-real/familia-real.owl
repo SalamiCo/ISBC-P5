@@ -12,18 +12,20 @@
   xml:base="http://www.owl-ontologies.com/familia-real.owl">
   <owl:Ontology rdf:about=""/>
   <owl:Class rdf:ID="Hijo">
-    <rdfs:subClassOf>
-      <owl:Class rdf:ID="Persona"/>
-    </rdfs:subClassOf>
     <owl:equivalentClass>
-      <owl:Restriction>
-        <owl:someValuesFrom>
+      <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+          <owl:Restriction>
+            <owl:someValuesFrom>
+              <owl:Class rdf:ID="Persona"/>
+            </owl:someValuesFrom>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:ID="esHijo"/>
+            </owl:onProperty>
+          </owl:Restriction>
           <owl:Class rdf:about="#Persona"/>
-        </owl:someValuesFrom>
-        <owl:onProperty>
-          <owl:ObjectProperty rdf:ID="esHijo"/>
-        </owl:onProperty>
-      </owl:Restriction>
+        </owl:intersectionOf>
+      </owl:Class>
     </owl:equivalentClass>
   </owl:Class>
   <owl:Class rdf:ID="Principe">
@@ -52,89 +54,74 @@
         </owl:intersectionOf>
       </owl:Class>
     </owl:equivalentClass>
-    <rdfs:subClassOf>
-      <owl:Class rdf:about="#Persona"/>
-    </rdfs:subClassOf>
-  </owl:Class>
-  <owl:Class rdf:ID="Cuñado">
-    <owl:equivalentClass>
-      <owl:Restriction>
-        <owl:onProperty>
-          <owl:SymmetricProperty rdf:ID="hermanoDe"/>
-        </owl:onProperty>
-        <owl:someValuesFrom>
-          <owl:Class>
-            <owl:intersectionOf rdf:parseType="Collection">
-              <owl:Class rdf:about="#Persona"/>
-              <owl:Restriction>
-                <owl:onProperty>
-                  <owl:SymmetricProperty rdf:ID="casadoCon"/>
-                </owl:onProperty>
-                <owl:someValuesFrom>
-                  <owl:Class rdf:about="#Persona"/>
-                </owl:someValuesFrom>
-              </owl:Restriction>
-            </owl:intersectionOf>
-          </owl:Class>
-        </owl:someValuesFrom>
-      </owl:Restriction>
-    </owl:equivalentClass>
-    <owl:equivalentClass>
-      <owl:Restriction>
-        <owl:onProperty>
-          <owl:SymmetricProperty rdf:about="#casadoCon"/>
-        </owl:onProperty>
-        <owl:someValuesFrom>
-          <owl:Class>
-            <owl:intersectionOf rdf:parseType="Collection">
-              <owl:Class rdf:about="#Persona"/>
-              <owl:Restriction>
-                <owl:onProperty>
-                  <owl:SymmetricProperty rdf:about="#hermanoDe"/>
-                </owl:onProperty>
-                <owl:someValuesFrom>
-                  <owl:Class rdf:about="#Persona"/>
-                </owl:someValuesFrom>
-              </owl:Restriction>
-            </owl:intersectionOf>
-          </owl:Class>
-        </owl:someValuesFrom>
-      </owl:Restriction>
-    </owl:equivalentClass>
-    <rdfs:subClassOf>
-      <owl:Class rdf:about="#Persona"/>
-    </rdfs:subClassOf>
   </owl:Class>
   <owl:Class rdf:about="#Hombre">
     <rdfs:subClassOf>
       <owl:Class rdf:about="#Persona"/>
     </rdfs:subClassOf>
   </owl:Class>
+  <owl:Class rdf:ID="Cuñado">
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+          <owl:Restriction>
+            <owl:someValuesFrom>
+              <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                  <owl:Class rdf:about="#Persona"/>
+                  <owl:Restriction>
+                    <owl:someValuesFrom>
+                      <owl:Class rdf:about="#Persona"/>
+                    </owl:someValuesFrom>
+                    <owl:onProperty>
+                      <owl:SymmetricProperty rdf:ID="hermanoDe"/>
+                    </owl:onProperty>
+                  </owl:Restriction>
+                </owl:intersectionOf>
+              </owl:Class>
+            </owl:someValuesFrom>
+            <owl:onProperty>
+              <owl:SymmetricProperty rdf:ID="casadoCon"/>
+            </owl:onProperty>
+          </owl:Restriction>
+          <owl:Class rdf:about="#Persona"/>
+        </owl:intersectionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+          <owl:Restriction>
+            <owl:someValuesFrom>
+              <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                  <owl:Class rdf:about="#Persona"/>
+                  <owl:Restriction>
+                    <owl:someValuesFrom>
+                      <owl:Class rdf:about="#Persona"/>
+                    </owl:someValuesFrom>
+                    <owl:onProperty>
+                      <owl:SymmetricProperty rdf:about="#casadoCon"/>
+                    </owl:onProperty>
+                  </owl:Restriction>
+                </owl:intersectionOf>
+              </owl:Class>
+            </owl:someValuesFrom>
+            <owl:onProperty>
+              <owl:SymmetricProperty rdf:about="#hermanoDe"/>
+            </owl:onProperty>
+          </owl:Restriction>
+          <owl:Class rdf:about="#Persona"/>
+        </owl:intersectionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+  </owl:Class>
   <owl:Class rdf:ID="Mujer">
     <rdfs:subClassOf>
       <owl:Class rdf:about="#Persona"/>
     </rdfs:subClassOf>
   </owl:Class>
-  <owl:Class rdf:ID="Familiares">
-    <owl:equivalentClass>
-      <owl:Class>
-        <owl:intersectionOf rdf:parseType="Collection">
-          <owl:Restriction>
-            <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
-            >3</owl:minCardinality>
-            <owl:onProperty>
-              <owl:ObjectProperty rdf:ID="aparece"/>
-            </owl:onProperty>
-          </owl:Restriction>
-          <owl:Class rdf:ID="Foto"/>
-        </owl:intersectionOf>
-      </owl:Class>
-    </owl:equivalentClass>
-  </owl:Class>
   <owl:Class rdf:ID="Primo">
-    <rdfs:subClassOf>
-      <owl:Class rdf:about="#Persona"/>
-    </rdfs:subClassOf>
     <owl:equivalentClass>
       <owl:Class>
         <owl:intersectionOf rdf:parseType="Collection">
@@ -175,26 +162,18 @@
       </owl:Class>
     </owl:equivalentClass>
   </owl:Class>
-  <owl:Class rdf:ID="SalganHermanos">
+  <owl:Class rdf:ID="Familiares">
     <owl:equivalentClass>
       <owl:Class>
         <owl:intersectionOf rdf:parseType="Collection">
           <owl:Restriction>
+            <owl:minCardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+            >3</owl:minCardinality>
             <owl:onProperty>
-              <owl:ObjectProperty rdf:about="#aparece"/>
+              <owl:ObjectProperty rdf:ID="aparece"/>
             </owl:onProperty>
-            <owl:someValuesFrom>
-              <owl:Restriction>
-                <owl:onProperty>
-                  <owl:SymmetricProperty rdf:about="#hermanoDe"/>
-                </owl:onProperty>
-                <owl:someValuesFrom>
-                  <owl:Class rdf:about="#Persona"/>
-                </owl:someValuesFrom>
-              </owl:Restriction>
-            </owl:someValuesFrom>
           </owl:Restriction>
-          <owl:Class rdf:about="#Foto"/>
+          <owl:Class rdf:ID="Foto"/>
         </owl:intersectionOf>
       </owl:Class>
     </owl:equivalentClass>
@@ -217,6 +196,45 @@
             <owl:onProperty>
               <owl:ObjectProperty rdf:about="#aparece"/>
             </owl:onProperty>
+          </owl:Restriction>
+          <owl:Class rdf:about="#Foto"/>
+          <owl:Restriction>
+            <owl:someValuesFrom>
+              <owl:Restriction>
+                <owl:someValuesFrom>
+                  <owl:Class rdf:about="#Persona"/>
+                </owl:someValuesFrom>
+                <owl:onProperty>
+                  <owl:SymmetricProperty rdf:about="#casadoCon"/>
+                </owl:onProperty>
+              </owl:Restriction>
+            </owl:someValuesFrom>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:about="#aparece"/>
+            </owl:onProperty>
+          </owl:Restriction>
+        </owl:intersectionOf>
+      </owl:Class>
+    </owl:equivalentClass>
+  </owl:Class>
+  <owl:Class rdf:ID="SalganHermanos">
+    <owl:equivalentClass>
+      <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+          <owl:Restriction>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:about="#aparece"/>
+            </owl:onProperty>
+            <owl:someValuesFrom>
+              <owl:Restriction>
+                <owl:onProperty>
+                  <owl:SymmetricProperty rdf:about="#hermanoDe"/>
+                </owl:onProperty>
+                <owl:someValuesFrom>
+                  <owl:Class rdf:about="#Persona"/>
+                </owl:someValuesFrom>
+              </owl:Restriction>
+            </owl:someValuesFrom>
           </owl:Restriction>
           <owl:Class rdf:about="#Foto"/>
         </owl:intersectionOf>
@@ -253,41 +271,49 @@
   </owl:Class>
   <owl:Class rdf:ID="Nieto">
     <owl:equivalentClass>
-      <owl:Restriction>
-        <owl:someValuesFrom rdf:resource="#Hijo"/>
-        <owl:onProperty>
-          <owl:ObjectProperty rdf:about="#esHijo"/>
-        </owl:onProperty>
-      </owl:Restriction>
+      <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+          <owl:Restriction>
+            <owl:someValuesFrom rdf:resource="#Hijo"/>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:about="#esHijo"/>
+            </owl:onProperty>
+          </owl:Restriction>
+          <owl:Class rdf:about="#Persona"/>
+        </owl:intersectionOf>
+      </owl:Class>
     </owl:equivalentClass>
-    <rdfs:subClassOf rdf:resource="#Persona"/>
   </owl:Class>
   <owl:Class rdf:ID="NietosRey">
     <owl:equivalentClass>
-      <owl:Restriction>
-        <owl:someValuesFrom>
-          <owl:Class>
-            <owl:intersectionOf rdf:parseType="Collection">
-              <owl:Class rdf:about="#Persona"/>
-              <owl:Restriction>
-                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
-                >1</owl:cardinality>
-                <owl:valuesFrom>
-                  <owl:Class rdf:ID="Rey"/>
-                </owl:valuesFrom>
-                <owl:onProperty>
-                  <owl:ObjectProperty rdf:about="#esHijo"/>
-                </owl:onProperty>
-              </owl:Restriction>
-            </owl:intersectionOf>
-          </owl:Class>
-        </owl:someValuesFrom>
-        <owl:onProperty>
-          <owl:ObjectProperty rdf:about="#esHijo"/>
-        </owl:onProperty>
-      </owl:Restriction>
+      <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+          <owl:Restriction>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:about="#esHijo"/>
+            </owl:onProperty>
+            <owl:someValuesFrom>
+              <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                  <owl:Class rdf:about="#Persona"/>
+                  <owl:Restriction>
+                    <owl:onProperty>
+                      <owl:ObjectProperty rdf:about="#esHijo"/>
+                    </owl:onProperty>
+                    <owl:valuesFrom>
+                      <owl:Class rdf:ID="Rey"/>
+                    </owl:valuesFrom>
+                    <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+                    >1</owl:cardinality>
+                  </owl:Restriction>
+                </owl:intersectionOf>
+              </owl:Class>
+            </owl:someValuesFrom>
+          </owl:Restriction>
+          <owl:Class rdf:about="#Persona"/>
+        </owl:intersectionOf>
+      </owl:Class>
     </owl:equivalentClass>
-    <rdfs:subClassOf rdf:resource="#Persona"/>
   </owl:Class>
   <owl:Class rdf:about="#Foto">
     <owl:disjointWith>
@@ -297,17 +323,20 @@
   </owl:Class>
   <owl:Class rdf:ID="Yerno">
     <owl:equivalentClass>
-      <owl:Restriction>
-        <owl:someValuesFrom rdf:resource="#Hijo"/>
-        <owl:onProperty>
-          <owl:SymmetricProperty rdf:about="#casadoCon"/>
-        </owl:onProperty>
-      </owl:Restriction>
+      <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+          <owl:Restriction>
+            <owl:onProperty>
+              <owl:SymmetricProperty rdf:about="#casadoCon"/>
+            </owl:onProperty>
+            <owl:someValuesFrom rdf:resource="#Hijo"/>
+          </owl:Restriction>
+          <owl:Class rdf:about="#Persona"/>
+        </owl:intersectionOf>
+      </owl:Class>
     </owl:equivalentClass>
-    <rdfs:subClassOf rdf:resource="#Persona"/>
   </owl:Class>
   <owl:Class rdf:about="#Padre">
-    <rdfs:subClassOf rdf:resource="#Persona"/>
     <owl:equivalentClass>
       <owl:Class>
         <owl:intersectionOf rdf:parseType="Collection">
@@ -346,7 +375,6 @@
     </owl:equivalentClass>
   </owl:Class>
   <owl:Class rdf:ID="Prima">
-    <rdfs:subClassOf rdf:resource="#Persona"/>
     <owl:equivalentClass>
       <owl:Class>
         <owl:intersectionOf rdf:parseType="Collection">
@@ -387,28 +415,32 @@
   </owl:Class>
   <owl:Class rdf:ID="SobrinoPrincipe">
     <owl:equivalentClass>
-      <owl:Restriction>
-        <owl:someValuesFrom>
-          <owl:Class>
-            <owl:intersectionOf rdf:parseType="Collection">
-              <owl:Class rdf:about="#Persona"/>
-              <owl:Restriction>
-                <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
-                >1</owl:cardinality>
-                <owl:valuesFrom rdf:resource="#Principe"/>
-                <owl:onProperty>
-                  <owl:SymmetricProperty rdf:about="#hermanoDe"/>
-                </owl:onProperty>
-              </owl:Restriction>
-            </owl:intersectionOf>
-          </owl:Class>
-        </owl:someValuesFrom>
-        <owl:onProperty>
-          <owl:ObjectProperty rdf:about="#esHijo"/>
-        </owl:onProperty>
-      </owl:Restriction>
+      <owl:Class>
+        <owl:intersectionOf rdf:parseType="Collection">
+          <owl:Restriction>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:about="#esHijo"/>
+            </owl:onProperty>
+            <owl:someValuesFrom>
+              <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                  <owl:Class rdf:about="#Persona"/>
+                  <owl:Restriction>
+                    <owl:onProperty>
+                      <owl:SymmetricProperty rdf:about="#hermanoDe"/>
+                    </owl:onProperty>
+                    <owl:valuesFrom rdf:resource="#Principe"/>
+                    <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
+                    >1</owl:cardinality>
+                  </owl:Restriction>
+                </owl:intersectionOf>
+              </owl:Class>
+            </owl:someValuesFrom>
+          </owl:Restriction>
+          <owl:Class rdf:about="#Persona"/>
+        </owl:intersectionOf>
+      </owl:Class>
     </owl:equivalentClass>
-    <rdfs:subClassOf rdf:resource="#Persona"/>
   </owl:Class>
   <owl:Class rdf:about="#Rey">
     <rdfs:subClassOf rdf:resource="#Hombre"/>
@@ -480,29 +512,14 @@
       <URL rdf:ID="foto20.jpg"/>
     </tieneURL>
   </Foto>
-  <Foto rdf:ID="foto15">
-    <tieneURL>
-      <URL rdf:ID="foto15.jpg"/>
-    </tieneURL>
-  </Foto>
   <Foto rdf:ID="foto3">
     <tieneURL>
       <URL rdf:ID="foto3.jpg"/>
     </tieneURL>
   </Foto>
-  <Foto rdf:ID="foto16">
-    <tieneURL>
-      <URL rdf:ID="foto16.jpg"/>
-    </tieneURL>
-  </Foto>
   <Foto rdf:ID="foto6">
     <tieneURL>
       <URL rdf:ID="foto6.jpg"/>
-    </tieneURL>
-  </Foto>
-  <Foto rdf:ID="foto13">
-    <tieneURL>
-      <URL rdf:ID="foto13.png"/>
     </tieneURL>
   </Foto>
   <Foto rdf:ID="foto7">
@@ -515,11 +532,6 @@
       <URL rdf:ID="foto5.jpg"/>
     </tieneURL>
   </Foto>
-  <Foto rdf:ID="foto14">
-    <tieneURL>
-      <URL rdf:ID="foto14.jpg"/>
-    </tieneURL>
-  </Foto>
   <Foto rdf:ID="foto10">
     <tieneURL>
       <URL rdf:ID="foto10.png"/>
@@ -528,11 +540,6 @@
   <Foto rdf:ID="foto9">
     <tieneURL>
       <URL rdf:ID="foto9.png"/>
-    </tieneURL>
-  </Foto>
-  <Foto rdf:ID="foto19">
-    <tieneURL>
-      <URL rdf:ID="foto19.jpg"/>
     </tieneURL>
   </Foto>
   <Foto rdf:ID="foto23">
@@ -550,16 +557,6 @@
       <URL rdf:ID="foto12.png"/>
     </tieneURL>
   </Foto>
-  <Foto rdf:ID="foto2">
-    <tieneURL>
-      <URL rdf:ID="foto2.png"/>
-    </tieneURL>
-  </Foto>
-  <Foto rdf:ID="foto17">
-    <tieneURL>
-      <URL rdf:ID="foto17.jpg"/>
-    </tieneURL>
-  </Foto>
   <Foto rdf:ID="foto21">
     <tieneURL>
       <URL rdf:ID="foto21.jpg"/>
@@ -568,6 +565,41 @@
   <Foto rdf:ID="foto11">
     <tieneURL>
       <URL rdf:ID="foto11.png"/>
+    </tieneURL>
+  </Foto>
+  <Foto rdf:ID="foto15">
+    <tieneURL>
+      <URL rdf:ID="foto15.jpg"/>
+    </tieneURL>
+  </Foto>
+  <Foto rdf:ID="foto16">
+    <tieneURL>
+      <URL rdf:ID="foto16.jpg"/>
+    </tieneURL>
+  </Foto>
+  <Foto rdf:ID="foto13">
+    <tieneURL>
+      <URL rdf:ID="foto13.png"/>
+    </tieneURL>
+  </Foto>
+  <Foto rdf:ID="foto14">
+    <tieneURL>
+      <URL rdf:ID="foto14.jpg"/>
+    </tieneURL>
+  </Foto>
+  <Foto rdf:ID="foto19">
+    <tieneURL>
+      <URL rdf:ID="foto19.jpg"/>
+    </tieneURL>
+  </Foto>
+  <Foto rdf:ID="foto2">
+    <tieneURL>
+      <URL rdf:ID="foto2.png"/>
+    </tieneURL>
+  </Foto>
+  <Foto rdf:ID="foto17">
+    <tieneURL>
+      <URL rdf:ID="foto17.jpg"/>
     </tieneURL>
   </Foto>
   <Foto rdf:ID="foto1">
