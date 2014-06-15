@@ -17,10 +17,10 @@
     </rdfs:subClassOf>
     <owl:equivalentClass>
       <owl:Restriction>
+        <owl:someValuesFrom rdf:resource="#Persona"/>
         <owl:onProperty>
           <owl:ObjectProperty rdf:ID="esHijo"/>
         </owl:onProperty>
-        <owl:someValuesFrom rdf:resource="#Persona"/>
       </owl:Restriction>
     </owl:equivalentClass>
   </owl:Class>
@@ -35,6 +35,9 @@
         <owl:intersectionOf rdf:parseType="Collection">
           <owl:Class rdf:about="#Hombre"/>
           <owl:Restriction>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:ID="esProgenitor"/>
+            </owl:onProperty>
             <owl:someValuesFrom>
               <owl:Class>
                 <owl:unionOf rdf:parseType="Collection">
@@ -43,9 +46,6 @@
                 </owl:unionOf>
               </owl:Class>
             </owl:someValuesFrom>
-            <owl:onProperty>
-              <owl:ObjectProperty rdf:ID="esProgenitor"/>
-            </owl:onProperty>
           </owl:Restriction>
         </owl:intersectionOf>
       </owl:Class>
@@ -55,6 +55,9 @@
   <owl:Class rdf:ID="Cuñado">
     <owl:equivalentClass>
       <owl:Restriction>
+        <owl:onProperty>
+          <owl:SymmetricProperty rdf:ID="hermanoDe"/>
+        </owl:onProperty>
         <owl:someValuesFrom>
           <owl:Class>
             <owl:intersectionOf rdf:parseType="Collection">
@@ -62,35 +65,32 @@
               <owl:Restriction>
                 <owl:someValuesFrom rdf:resource="#Persona"/>
                 <owl:onProperty>
-                  <owl:ObjectProperty rdf:ID="hermanoDe"/>
+                  <owl:SymmetricProperty rdf:ID="casadoCon"/>
                 </owl:onProperty>
               </owl:Restriction>
             </owl:intersectionOf>
           </owl:Class>
         </owl:someValuesFrom>
-        <owl:onProperty>
-          <owl:ObjectProperty rdf:ID="casadoCon"/>
-        </owl:onProperty>
       </owl:Restriction>
     </owl:equivalentClass>
     <owl:equivalentClass>
       <owl:Restriction>
+        <owl:onProperty>
+          <owl:SymmetricProperty rdf:about="#casadoCon"/>
+        </owl:onProperty>
         <owl:someValuesFrom>
           <owl:Class>
             <owl:intersectionOf rdf:parseType="Collection">
               <owl:Class rdf:about="#Persona"/>
               <owl:Restriction>
-                <owl:someValuesFrom rdf:resource="#Persona"/>
                 <owl:onProperty>
-                  <owl:ObjectProperty rdf:about="#casadoCon"/>
+                  <owl:SymmetricProperty rdf:about="#hermanoDe"/>
                 </owl:onProperty>
+                <owl:someValuesFrom rdf:resource="#Persona"/>
               </owl:Restriction>
             </owl:intersectionOf>
           </owl:Class>
         </owl:someValuesFrom>
-        <owl:onProperty>
-          <owl:ObjectProperty rdf:about="#hermanoDe"/>
-        </owl:onProperty>
       </owl:Restriction>
     </owl:equivalentClass>
     <rdfs:subClassOf rdf:resource="#Persona"/>
@@ -121,7 +121,7 @@
                   <owl:Class rdf:about="#Persona"/>
                   <owl:Restriction>
                     <owl:onProperty>
-                      <owl:ObjectProperty rdf:about="#hermanoDe"/>
+                      <owl:SymmetricProperty rdf:about="#hermanoDe"/>
                     </owl:onProperty>
                     <owl:someValuesFrom>
                       <owl:Class>
@@ -214,7 +214,7 @@
       <owl:Restriction>
         <owl:someValuesFrom rdf:resource="#Hijo"/>
         <owl:onProperty>
-          <owl:ObjectProperty rdf:about="#casadoCon"/>
+          <owl:SymmetricProperty rdf:about="#casadoCon"/>
         </owl:onProperty>
       </owl:Restriction>
     </owl:equivalentClass>
@@ -242,6 +242,9 @@
       <owl:Class>
         <owl:intersectionOf rdf:parseType="Collection">
           <owl:Restriction>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:about="#esProgenitor"/>
+            </owl:onProperty>
             <owl:someValuesFrom>
               <owl:Class>
                 <owl:unionOf rdf:parseType="Collection">
@@ -250,9 +253,6 @@
                 </owl:unionOf>
               </owl:Class>
             </owl:someValuesFrom>
-            <owl:onProperty>
-              <owl:ObjectProperty rdf:about="#esProgenitor"/>
-            </owl:onProperty>
           </owl:Restriction>
           <owl:Class rdf:about="#Mujer"/>
         </owl:intersectionOf>
@@ -266,34 +266,34 @@
         <owl:intersectionOf rdf:parseType="Collection">
           <owl:Class rdf:about="#Mujer"/>
           <owl:Restriction>
-            <owl:onProperty>
-              <owl:ObjectProperty rdf:about="#esHijo"/>
-            </owl:onProperty>
             <owl:someValuesFrom>
               <owl:Class>
                 <owl:intersectionOf rdf:parseType="Collection">
                   <owl:Class rdf:about="#Persona"/>
                   <owl:Restriction>
+                    <owl:onProperty>
+                      <owl:SymmetricProperty rdf:about="#hermanoDe"/>
+                    </owl:onProperty>
                     <owl:someValuesFrom>
                       <owl:Class>
                         <owl:intersectionOf rdf:parseType="Collection">
                           <owl:Class rdf:about="#Persona"/>
                           <owl:Restriction>
+                            <owl:someValuesFrom rdf:resource="#Persona"/>
                             <owl:onProperty>
                               <owl:ObjectProperty rdf:about="#esProgenitor"/>
                             </owl:onProperty>
-                            <owl:someValuesFrom rdf:resource="#Persona"/>
                           </owl:Restriction>
                         </owl:intersectionOf>
                       </owl:Class>
                     </owl:someValuesFrom>
-                    <owl:onProperty>
-                      <owl:ObjectProperty rdf:about="#hermanoDe"/>
-                    </owl:onProperty>
                   </owl:Restriction>
                 </owl:intersectionOf>
               </owl:Class>
             </owl:someValuesFrom>
+            <owl:onProperty>
+              <owl:ObjectProperty rdf:about="#esHijo"/>
+            </owl:onProperty>
           </owl:Restriction>
         </owl:intersectionOf>
       </owl:Class>
@@ -302,24 +302,24 @@
   <owl:Class rdf:ID="SobrinoPrincipe">
     <owl:equivalentClass>
       <owl:Restriction>
+        <owl:onProperty>
+          <owl:ObjectProperty rdf:about="#esHijo"/>
+        </owl:onProperty>
         <owl:someValuesFrom>
           <owl:Class>
             <owl:intersectionOf rdf:parseType="Collection">
               <owl:Class rdf:about="#Persona"/>
               <owl:Restriction>
-                <owl:onProperty>
-                  <owl:ObjectProperty rdf:about="#hermanoDe"/>
-                </owl:onProperty>
                 <owl:cardinality rdf:datatype="http://www.w3.org/2001/XMLSchema#int"
                 >1</owl:cardinality>
                 <owl:valuesFrom rdf:resource="#Principe"/>
+                <owl:onProperty>
+                  <owl:SymmetricProperty rdf:about="#hermanoDe"/>
+                </owl:onProperty>
               </owl:Restriction>
             </owl:intersectionOf>
           </owl:Class>
         </owl:someValuesFrom>
-        <owl:onProperty>
-          <owl:ObjectProperty rdf:about="#esHijo"/>
-        </owl:onProperty>
       </owl:Restriction>
     </owl:equivalentClass>
     <rdfs:subClassOf rdf:resource="#Persona"/>
@@ -327,15 +327,10 @@
   <owl:Class rdf:about="#Rey">
     <rdfs:subClassOf rdf:resource="#Hombre"/>
   </owl:Class>
+  <owl:Class rdf:ID="URL"/>
   <owl:Class rdf:ID="SalgaElRey">
     <rdfs:subClassOf rdf:resource="#Foto"/>
   </owl:Class>
-  <owl:ObjectProperty rdf:ID="divorciadoDe">
-    <owl:inverseOf rdf:resource="#divorciadoDe"/>
-    <rdfs:range rdf:resource="#Persona"/>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
-    <rdfs:domain rdf:resource="#Persona"/>
-  </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="#esProgenitor">
     <rdfs:range rdf:resource="#Persona"/>
     <rdfs:domain rdf:resource="#Persona"/>
@@ -343,74 +338,172 @@
       <owl:ObjectProperty rdf:about="#esHijo"/>
     </owl:inverseOf>
   </owl:ObjectProperty>
-  <owl:ObjectProperty rdf:about="#casadoCon">
-    <owl:inverseOf rdf:resource="#casadoCon"/>
+  <owl:ObjectProperty rdf:ID="aparece">
     <rdfs:range rdf:resource="#Persona"/>
-    <rdfs:domain rdf:resource="#Persona"/>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
+    <rdfs:domain rdf:resource="#Foto"/>
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:ID="tieneURL">
+    <rdfs:domain rdf:resource="#Foto"/>
+    <rdfs:range rdf:resource="#URL"/>
   </owl:ObjectProperty>
   <owl:ObjectProperty rdf:about="#esHijo">
     <owl:inverseOf rdf:resource="#esProgenitor"/>
     <rdfs:domain rdf:resource="#Persona"/>
     <rdfs:range rdf:resource="#Persona"/>
   </owl:ObjectProperty>
-  <owl:ObjectProperty rdf:about="#hermanoDe">
+  <owl:SymmetricProperty rdf:ID="divorciadoDe">
+    <owl:inverseOf rdf:resource="#divorciadoDe"/>
+    <rdfs:range rdf:resource="#Persona"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+    <rdfs:domain rdf:resource="#Persona"/>
+  </owl:SymmetricProperty>
+  <owl:SymmetricProperty rdf:about="#casadoCon">
+    <owl:inverseOf rdf:resource="#casadoCon"/>
+    <rdfs:range rdf:resource="#Persona"/>
+    <rdfs:domain rdf:resource="#Persona"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+  </owl:SymmetricProperty>
+  <owl:SymmetricProperty rdf:about="#hermanoDe">
     <owl:inverseOf rdf:resource="#hermanoDe"/>
     <rdfs:domain rdf:resource="#Persona"/>
     <rdfs:range rdf:resource="#Persona"/>
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#SymmetricProperty"/>
-  </owl:ObjectProperty>
-  <owl:DatatypeProperty rdf:ID="urlfoto"/>
+    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+  </owl:SymmetricProperty>
   <Foto rdf:ID="foto4">
+    <tieneURL>
+      <URL rdf:ID="foto4.jpg"/>
+    </tieneURL>
+  </Foto>
+  <Foto rdf:ID="foto20">
+    <tieneURL>
+      <URL rdf:ID="foto20.jpg"/>
+    </tieneURL>
+  </Foto>
+  <Foto rdf:ID="foto15">
+    <tieneURL>
+      <URL rdf:ID="foto15.jpg"/>
+    </tieneURL>
+  </Foto>
+  <Foto rdf:ID="foto3">
+    <tieneURL>
+      <URL rdf:ID="foto3.jpg"/>
+    </tieneURL>
+  </Foto>
+  <Foto rdf:ID="foto16">
+    <tieneURL>
+      <URL rdf:ID="foto16.jpg"/>
+    </tieneURL>
+  </Foto>
+  <Foto rdf:ID="foto6">
+    <tieneURL>
+      <URL rdf:ID="foto6.jpg"/>
+    </tieneURL>
+  </Foto>
+  <Foto rdf:ID="foto13">
+    <tieneURL>
+      <URL rdf:ID="foto13.png"/>
+    </tieneURL>
+  </Foto>
+  <Foto rdf:ID="foto7">
     <aparece>
-      <Mujer rdf:ID="ReinaSofia">
+      <Rey rdf:ID="ReyJuanCarlos">
         <casadoCon>
-          <Rey rdf:ID="ReyJuanCarlos">
-            <casadoCon rdf:resource="#ReinaSofia"/>
+          <Mujer rdf:ID="ReinaSofia">
+            <casadoCon rdf:resource="#ReyJuanCarlos"/>
             <esProgenitor>
-              <Principe rdf:ID="Felipe">
+              <Mujer rdf:ID="Elena">
+                <esProgenitor>
+                  <Mujer rdf:ID="Victoria">
+                    <hermanoDe>
+                      <Hombre rdf:ID="Froilán">
+                        <esHijo rdf:resource="#Elena"/>
+                        <esHijo>
+                          <Hombre rdf:ID="Marichalar">
+                            <esProgenitor rdf:resource="#Victoria"/>
+                            <esProgenitor rdf:resource="#Froilán"/>
+                            <divorciadoDe rdf:resource="#Elena"/>
+                          </Hombre>
+                        </esHijo>
+                        <hermanoDe rdf:resource="#Victoria"/>
+                      </Hombre>
+                    </hermanoDe>
+                    <esHijo rdf:resource="#Elena"/>
+                    <esHijo rdf:resource="#Marichalar"/>
+                  </Mujer>
+                </esProgenitor>
+                <esProgenitor rdf:resource="#Froilán"/>
+                <esHijo rdf:resource="#ReinaSofia"/>
+                <esHijo rdf:resource="#ReyJuanCarlos"/>
                 <hermanoDe>
                   <Mujer rdf:ID="Cristina">
-                    <hermanoDe rdf:resource="#Felipe"/>
+                    <hermanoDe>
+                      <Principe rdf:ID="Felipe">
+                        <hermanoDe rdf:resource="#Elena"/>
+                        <hermanoDe rdf:resource="#Cristina"/>
+                        <casadoCon>
+                          <Mujer rdf:ID="Letizia">
+                            <casadoCon rdf:resource="#Felipe"/>
+                            <esProgenitor>
+                              <Mujer rdf:ID="InfantaSofia">
+                                <hermanoDe>
+                                  <Mujer rdf:ID="Leonor">
+                                    <esHijo rdf:resource="#Letizia"/>
+                                    <esHijo rdf:resource="#Felipe"/>
+                                    <hermanoDe rdf:resource="#InfantaSofia"/>
+                                  </Mujer>
+                                </hermanoDe>
+                                <esHijo rdf:resource="#Letizia"/>
+                                <esHijo rdf:resource="#Felipe"/>
+                              </Mujer>
+                            </esProgenitor>
+                            <esProgenitor rdf:resource="#Leonor"/>
+                          </Mujer>
+                        </casadoCon>
+                        <esHijo rdf:resource="#ReinaSofia"/>
+                        <esHijo rdf:resource="#ReyJuanCarlos"/>
+                        <esProgenitor rdf:resource="#InfantaSofia"/>
+                        <esProgenitor rdf:resource="#Leonor"/>
+                      </Principe>
+                    </hermanoDe>
                     <esProgenitor>
                       <Hombre rdf:ID="Miguel">
                         <hermanoDe>
-                          <Hombre rdf:ID="JuanValentín">
-                            <hermanoDe rdf:resource="#Miguel"/>
-                            <hermanoDe>
-                              <Hombre rdf:ID="PabloNicolás">
-                                <hermanoDe rdf:resource="#JuanValentín"/>
-                                <hermanoDe rdf:resource="#Miguel"/>
-                                <hermanoDe>
-                                  <Mujer rdf:ID="Irene">
-                                    <esHijo rdf:resource="#Cristina"/>
-                                    <esHijo>
-                                      <Hombre rdf:ID="Urdangarín">
-                                        <casadoCon rdf:resource="#Cristina"/>
-                                        <esProgenitor rdf:resource="#Irene"/>
-                                        <esProgenitor rdf:resource="#Miguel"/>
-                                        <esProgenitor rdf:resource="#JuanValentín"/>
-                                        <esProgenitor rdf:resource="#PabloNicolás"/>
-                                      </Hombre>
-                                    </esHijo>
-                                    <hermanoDe rdf:resource="#JuanValentín"/>
+                          <Mujer rdf:ID="Irene">
+                            <esHijo>
+                              <Hombre rdf:ID="Urdangarín">
+                                <casadoCon rdf:resource="#Cristina"/>
+                                <esProgenitor>
+                                  <Hombre rdf:ID="PabloNicolás">
+                                    <hermanoDe rdf:resource="#Irene"/>
                                     <hermanoDe rdf:resource="#Miguel"/>
-                                    <hermanoDe rdf:resource="#PabloNicolás"/>
-                                  </Mujer>
-                                </hermanoDe>
-                                <esHijo rdf:resource="#Cristina"/>
-                                <esHijo rdf:resource="#Urdangarín"/>
+                                    <hermanoDe>
+                                      <Hombre rdf:ID="JuanValentín">
+                                        <hermanoDe rdf:resource="#Irene"/>
+                                        <hermanoDe rdf:resource="#PabloNicolás"/>
+                                        <hermanoDe rdf:resource="#Miguel"/>
+                                        <esHijo rdf:resource="#Urdangarín"/>
+                                        <esHijo rdf:resource="#Cristina"/>
+                                      </Hombre>
+                                    </hermanoDe>
+                                    <esHijo rdf:resource="#Urdangarín"/>
+                                    <esHijo rdf:resource="#Cristina"/>
+                                  </Hombre>
+                                </esProgenitor>
+                                <esProgenitor rdf:resource="#JuanValentín"/>
+                                <esProgenitor rdf:resource="#Miguel"/>
+                                <esProgenitor rdf:resource="#Irene"/>
                               </Hombre>
-                            </hermanoDe>
-                            <hermanoDe rdf:resource="#Irene"/>
+                            </esHijo>
                             <esHijo rdf:resource="#Cristina"/>
-                            <esHijo rdf:resource="#Urdangarín"/>
-                          </Hombre>
+                            <hermanoDe rdf:resource="#PabloNicolás"/>
+                            <hermanoDe rdf:resource="#Miguel"/>
+                            <hermanoDe rdf:resource="#JuanValentín"/>
+                          </Mujer>
                         </hermanoDe>
                         <hermanoDe rdf:resource="#PabloNicolás"/>
-                        <hermanoDe rdf:resource="#Irene"/>
-                        <esHijo rdf:resource="#Cristina"/>
+                        <hermanoDe rdf:resource="#JuanValentín"/>
                         <esHijo rdf:resource="#Urdangarín"/>
+                        <esHijo rdf:resource="#Cristina"/>
                       </Hombre>
                     </esProgenitor>
                     <esHijo rdf:resource="#ReinaSofia"/>
@@ -419,149 +512,93 @@
                     <esProgenitor rdf:resource="#Irene"/>
                     <casadoCon rdf:resource="#Urdangarín"/>
                     <esProgenitor rdf:resource="#JuanValentín"/>
-                    <hermanoDe>
-                      <Mujer rdf:ID="Elena">
-                        <esProgenitor>
-                          <Hombre rdf:ID="Froilán">
-                            <esHijo>
-                              <Hombre rdf:ID="Marichalar">
-                                <esProgenitor rdf:resource="#Froilán"/>
-                                <esProgenitor>
-                                  <Mujer rdf:ID="Victoria">
-                                    <hermanoDe rdf:resource="#Froilán"/>
-                                    <esHijo rdf:resource="#Marichalar"/>
-                                    <esHijo rdf:resource="#Elena"/>
-                                  </Mujer>
-                                </esProgenitor>
-                                <divorciadoDe rdf:resource="#Elena"/>
-                              </Hombre>
-                            </esHijo>
-                            <esHijo rdf:resource="#Elena"/>
-                            <hermanoDe rdf:resource="#Victoria"/>
-                          </Hombre>
-                        </esProgenitor>
-                        <esProgenitor rdf:resource="#Victoria"/>
-                        <esHijo rdf:resource="#ReyJuanCarlos"/>
-                        <esHijo rdf:resource="#ReinaSofia"/>
-                        <hermanoDe rdf:resource="#Felipe"/>
-                        <hermanoDe rdf:resource="#Cristina"/>
-                        <divorciadoDe rdf:resource="#Marichalar"/>
-                      </Mujer>
-                    </hermanoDe>
+                    <hermanoDe rdf:resource="#Elena"/>
                   </Mujer>
                 </hermanoDe>
-                <hermanoDe rdf:resource="#Elena"/>
-                <casadoCon>
-                  <Mujer rdf:ID="Letizia">
-                    <casadoCon rdf:resource="#Felipe"/>
-                    <esProgenitor>
-                      <Mujer rdf:ID="Leonor">
-                        <esHijo rdf:resource="#Felipe"/>
-                        <esHijo rdf:resource="#Letizia"/>
-                        <hermanoDe>
-                          <Mujer rdf:ID="InfantaSofia">
-                            <hermanoDe rdf:resource="#Leonor"/>
-                            <esHijo rdf:resource="#Felipe"/>
-                            <esHijo rdf:resource="#Letizia"/>
-                          </Mujer>
-                        </hermanoDe>
-                      </Mujer>
-                    </esProgenitor>
-                    <esProgenitor rdf:resource="#InfantaSofia"/>
-                  </Mujer>
-                </casadoCon>
-                <esHijo rdf:resource="#ReyJuanCarlos"/>
-                <esHijo rdf:resource="#ReinaSofia"/>
-                <esProgenitor rdf:resource="#Leonor"/>
-                <esProgenitor rdf:resource="#InfantaSofia"/>
-              </Principe>
+                <hermanoDe rdf:resource="#Felipe"/>
+                <divorciadoDe rdf:resource="#Marichalar"/>
+              </Mujer>
             </esProgenitor>
             <esProgenitor rdf:resource="#Cristina"/>
-            <esProgenitor rdf:resource="#Elena"/>
-          </Rey>
+            <esProgenitor rdf:resource="#Felipe"/>
+          </Mujer>
         </casadoCon>
-        <esProgenitor rdf:resource="#Felipe"/>
-        <esProgenitor rdf:resource="#Cristina"/>
         <esProgenitor rdf:resource="#Elena"/>
-      </Mujer>
+        <esProgenitor rdf:resource="#Cristina"/>
+        <esProgenitor rdf:resource="#Felipe"/>
+      </Rey>
     </aparece>
-    <aparece rdf:resource="#Letizia"/>
-    <aparece rdf:resource="#Leonor"/>
-    <aparece rdf:resource="#InfantaSofia"/>
-    <aparece rdf:resource="#ReyJuanCarlos"/>
-    <aparece rdf:resource="#Felipe"/>
+    <tieneURL>
+      <URL rdf:ID="foto7.png"/>
+    </tieneURL>
   </Foto>
-  <Foto rdf:ID="foto20"/>
-  <Foto rdf:ID="foto15"/>
-  <Foto rdf:ID="foto3">
-    <aparece rdf:resource="#ReinaSofia"/>
-    <aparece rdf:resource="#Letizia"/>
-    <aparece rdf:resource="#Elena"/>
-    <aparece rdf:resource="#Cristina"/>
-    <aparece rdf:resource="#Urdangarín"/>
-    <aparece rdf:resource="#ReyJuanCarlos"/>
-    <aparece rdf:resource="#Felipe"/>
-  </Foto>
-  <Foto rdf:ID="foto16"/>
-  <owl:AnnotationProperty rdf:ID="aparece">
-    <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
-  </owl:AnnotationProperty>
-  <Foto rdf:ID="foto6"/>
-  <Foto rdf:ID="foto13"/>
-  <Foto rdf:ID="foto7"/>
   <Foto rdf:ID="foto5">
-    <aparece rdf:resource="#Letizia"/>
-    <aparece rdf:resource="#Leonor"/>
-    <aparece rdf:resource="#InfantaSofia"/>
-    <aparece rdf:resource="#Felipe"/>
+    <tieneURL>
+      <URL rdf:ID="foto5.jpg"/>
+    </tieneURL>
   </Foto>
-  <Foto rdf:ID="foto14"/>
-  <Foto rdf:ID="foto10"/>
-  <Foto rdf:ID="foto9"/>
-  <Foto rdf:ID="foto19"/>
-  <Foto rdf:ID="foto23"/>
-  <Foto rdf:ID="foto8"/>
-  <Foto rdf:ID="foto22"/>
-  <Foto rdf:ID="foto12"/>
+  <Foto rdf:ID="foto14">
+    <tieneURL>
+      <URL rdf:ID="foto14.jpg"/>
+    </tieneURL>
+  </Foto>
+  <Foto rdf:ID="foto10">
+    <tieneURL>
+      <URL rdf:ID="foto10.png"/>
+    </tieneURL>
+  </Foto>
+  <Foto rdf:ID="foto9">
+    <tieneURL>
+      <URL rdf:ID="foto9.png"/>
+    </tieneURL>
+  </Foto>
+  <Foto rdf:ID="foto19">
+    <tieneURL>
+      <URL rdf:ID="foto19.jpg"/>
+    </tieneURL>
+  </Foto>
+  <Foto rdf:ID="foto23">
+    <tieneURL>
+      <URL rdf:ID="foto23.jpg"/>
+    </tieneURL>
+  </Foto>
+  <URL rdf:ID="URL_25"/>
+  <Foto rdf:ID="foto22">
+    <tieneURL>
+      <URL rdf:ID="foto22.jpg"/>
+    </tieneURL>
+  </Foto>
+  <Foto rdf:ID="foto12">
+    <tieneURL>
+      <URL rdf:ID="foto12.png"/>
+    </tieneURL>
+  </Foto>
   <Foto rdf:ID="foto2">
-    <aparece rdf:resource="#Irene"/>
-    <aparece rdf:resource="#Leonor"/>
-    <aparece rdf:resource="#ReyJuanCarlos"/>
-    <aparece rdf:resource="#ReinaSofia"/>
-    <aparece rdf:resource="#Victoria"/>
-    <aparece rdf:resource="#Urdangarín"/>
-    <aparece rdf:resource="#JuanValentín"/>
-    <aparece rdf:resource="#Miguel"/>
-    <aparece rdf:resource="#Elena"/>
-    <aparece rdf:resource="#Letizia"/>
-    <aparece rdf:resource="#Cristina"/>
-    <aparece rdf:resource="#PabloNicolás"/>
-    <aparece rdf:resource="#InfantaSofia"/>
-    <aparece rdf:resource="#Froilán"/>
-    <aparece rdf:resource="#Felipe"/>
+    <tieneURL>
+      <URL rdf:ID="foto2.png"/>
+    </tieneURL>
   </Foto>
-  <Foto rdf:ID="foto17"/>
-  <Foto rdf:ID="foto21"/>
-  <Foto rdf:ID="foto11"/>
+  <Foto rdf:ID="foto17">
+    <tieneURL>
+      <URL rdf:ID="foto17.JPG"/>
+    </tieneURL>
+  </Foto>
+  <Foto rdf:ID="foto21">
+    <tieneURL>
+      <URL rdf:ID="foto21.jpg"/>
+    </tieneURL>
+  </Foto>
+  <Foto rdf:ID="foto11">
+    <tieneURL>
+      <URL rdf:ID="foto11.png"/>
+    </tieneURL>
+  </Foto>
   <Foto rdf:ID="foto1">
-    <aparece rdf:resource="#JuanValentín"/>
-    <aparece rdf:resource="#InfantaSofia"/>
-    <aparece rdf:resource="#Miguel"/>
-    <aparece rdf:resource="#Letizia"/>
-    <aparece rdf:resource="#Leonor"/>
-    <aparece rdf:resource="#ReinaSofia"/>
-    <aparece rdf:resource="#Marichalar"/>
-    <aparece rdf:resource="#Cristina"/>
-    <aparece rdf:resource="#PabloNicolás"/>
-    <aparece rdf:resource="#Froilán"/>
-    <aparece rdf:resource="#Felipe"/>
-    <aparece rdf:resource="#Irene"/>
-    <aparece rdf:resource="#Elena"/>
+    <tieneURL>
+      <URL rdf:ID="foto1.png"/>
+    </tieneURL>
     <aparece rdf:resource="#ReyJuanCarlos"/>
-    <aparece rdf:resource="#Victoria"/>
-    <aparece rdf:resource="#Urdangarín"/>
   </Foto>
-  <Foto rdf:ID="foto18"/>
 </rdf:RDF>
 
 <!-- Created with Protege (with OWL Plugin 3.5, Build 663)  http://protege.stanford.edu -->
