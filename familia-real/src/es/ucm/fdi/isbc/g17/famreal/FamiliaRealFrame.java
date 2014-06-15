@@ -18,6 +18,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
@@ -45,6 +46,11 @@ public final class FamiliaRealFrame extends JFrame {
     /* Stored components */
     private JComboBox comboQueries;
     private JTree treeOntology;
+    private JLabel labelPhoto;
+    
+    /* List of photos to show */
+    private List<String> photoNames = new ArrayList<String>();
+    private int photoCurrent = 0;
 
     public FamiliaRealFrame () {
         setTitle("ISBC Grupo 17 - Práctica 5");
@@ -63,6 +69,7 @@ public final class FamiliaRealFrame extends JFrame {
         this.ontoBridge = ontoBridge;
 
         setupInterface();
+        updateInterface();
     }
 
     private void setupInterface () {
@@ -157,11 +164,28 @@ public final class FamiliaRealFrame extends JFrame {
         JPanel row = new JPanel(new FlowLayout());
         row.add(comboQueries);
         row.add(buttonSearch);
+        
+        /* Create the photo label */
+        labelPhoto = new JLabel();
 
         /* Fill the panel */
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(row, BorderLayout.PAGE_START);
+        panel.add(labelPhoto, BorderLayout.CENTER);
         return panel;
+    }
+    
+    private void updateInterface () {
+        if (photoCurrent >= photoNames.size()) {
+            photoCurrent = photoNames.size() - 1;
+        }
+        if (photoCurrent < 0) {
+            photoCurrent = 0;
+        }
+        
+        if (photoNames.isEmpty()) {
+            labelPhoto.setIcon(null);
+        }
     }
 
     private List<String> obtainQueryNames () {
