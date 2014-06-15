@@ -3,8 +3,6 @@ package es.ucm.fdi.isbc.g17.famreal;
 import java.util.Collections;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.ProgressMonitor;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.UIManager;
@@ -14,12 +12,24 @@ import es.ucm.fdi.gaia.ontobridge.OntologyDocument;
 
 public final class Main {
 
-    private static JFrame frame;
-    private static ProgressMonitor progress;
+    private static FamiliaRealFrame frame;
+
+    private static void setLookAndFeel (String... lafs) {
+        for (String laf : lafs) {
+            try {
+                UIManager.setLookAndFeel(laf);
+                return;
+
+            } catch (Exception e) {
+                // Next!
+            }
+        }
+    }
 
     public static void main (String[] args) throws Exception {
-        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        
+        setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel", UIManager.getSystemLookAndFeelClassName());
+        System.out.println(UIManager.getLookAndFeel());
+
         SwingUtilities.invokeLater(new Runnable() {
             public void run () {
                 preLoadOntology();
@@ -42,36 +52,27 @@ public final class Main {
     }
 
     private static void preLoadOntology () {
-        
-        progress = new ProgressMonitor(null, "Cargando Ontología...", "", 0, 100);
-        progress.setMillisToDecideToPopup(0);
-        progress.setMillisToPopup(0);
-        progress.setProgress(0);
+        frame = new FamiliaRealFrame();
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 
     protected static OntoBridge loadOntology () {
         OntoBridge ob = new OntoBridge();
         ob.initWithPelletReasoner();
 
-        progress.setProgress(10);
         OntologyDocument mainOnto = new OntologyDocument(Main.class.getResource("/familia-real.owl").toString(), null);
 
-        progress.setProgress(20);
         ob.loadOntology(mainOnto, Collections.<OntologyDocument> emptyList(), false);
 
-        progress.setProgress(90);
         return ob;
     }
 
     protected static void postLoadOntology (OntoBridge ob) {
-        progress.setProgress(100);
-        progress.close();
-        
-        frame = new JFrame();
-        frame.add(new JLabel("== PENE =="));
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+
+        frame.setOntoBridge(ob);
     }
 
 }
