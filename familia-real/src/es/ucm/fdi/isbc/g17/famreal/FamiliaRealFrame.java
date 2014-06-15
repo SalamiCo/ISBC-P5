@@ -1,12 +1,16 @@
 package es.ucm.fdi.isbc.g17.famreal;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -19,6 +23,9 @@ public final class FamiliaRealFrame extends JFrame {
 
     /* OntoBridge instance for recovering and tagging */
     private OntoBridge ontoBridge;
+
+    /* Stored components */
+    private JComboBox comboQueries;
 
     public FamiliaRealFrame () {
         setTitle("ISBC Grupo 17 - Práctica 5");
@@ -66,14 +73,27 @@ public final class FamiliaRealFrame extends JFrame {
     }
 
     private JPanel setupRetrievalPanel () {
-        JPanel panel = new JPanel(new BorderLayout());
-
-        /* Get the names of the available searches */
+        /* Get the names of the available searches and populate a dropdown */
         List<String> queries = obtainQueryNames();
-        JComboBox comboQueries = new JComboBox(queries.toArray());
+        comboQueries = new JComboBox(queries.toArray());
 
-        panel.add(comboQueries);
+        /* Create the search button */
+        JButton buttonSearch = new JButton("Buscar");
+        buttonSearch.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed (ActionEvent e) {
+                performSearch();
+            }
+        });
 
+        /* Add the two elements */
+        JPanel row = new JPanel(new FlowLayout());
+        row.add(comboQueries);
+        row.add(buttonSearch);
+
+        /* Fill the panel */
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.add(row, BorderLayout.PAGE_START);
         return panel;
     }
 
@@ -90,5 +110,13 @@ public final class FamiliaRealFrame extends JFrame {
 
         Collections.sort(queries);
         return queries;
+    }
+
+    /* package */void performSearch () {
+        String query = comboQueries.getSelectedItem().toString();
+
+        for (Iterator<String> it = ontoBridge.listInstances(query); it.hasNext();) {
+            System.out.println(it.next());
+        }
     }
 }
