@@ -9,10 +9,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -25,8 +28,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
+import javax.swing.JSlider;
 import javax.swing.JTabbedPane;
 import javax.swing.JTree;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreePath;
@@ -42,18 +48,29 @@ import es.ucm.fdi.gaia.ontobridge.OntoBridge;
  * @author Arturo Pareja García
  */
 public final class FamiliaRealFrame extends JFrame {
+    private static final long serialVersionUID = 2778873259694986961L;
 
     /* OntoBridge instance for recovering and tagging */
     private OntoBridge ontoBridge;
+    private final Map<String, Icon> photoIcons = new HashMap<String, Icon>();
 
     /* Stored components */
-    private JComboBox comboQueries;
+    private JComboBox<?> comboQueries;
     private JTree treeOntology;
-    private JLabel labelPhoto;
+
+    private JLabel labelPhotoSearch;
+    private JSlider sliderPhotoSearch;
+
+    private JLabel labelPhotoTag;
+    private JSlider sliderPhotoTag;
+
+    /* List of photos to show in search */
+    private final List<String> photoNamesSearch = new ArrayList<String>();
+    private int photoCurrentSearch = 0;
 
     /* List of photos to show */
-    private List<String> photoNames = new ArrayList<String>();
-    private int photoCurrent = 0;
+    private final List<String> photoNamesTag = new ArrayList<String>();
+    private int photoCurrentTag = 0;
 
     public FamiliaRealFrame () {
         setTitle("ISBC Grupo 17 - Práctica 5");
@@ -119,40 +136,70 @@ public final class FamiliaRealFrame extends JFrame {
             }
         });
 
-        tree.getModel().getRoot();
+        System.out.println("Generating Class Tree...");
 
+        tree.getModel().getRoot();
         for (Iterator<String> rc = ontoBridge.listRootClasses(); rc.hasNext();) {
             DefaultMutableTreeNode node = createNode(rc.next(), ontoBridge, 0);
             root.add(node);
         }
         tree.expandRow(0);
 
+        System.out.println();
         return tree;
     }
 
     private DefaultMutableTreeNode createNode (String nodeName, OntoBridge ob, int depth) {
-        DefaultMutableTreeNode node = new DefaultMutableTreeNode(ob.getShortName(nodeName));
+        for (int i = 0; i < depth; i++) {
+            System.out.print("  ");
+        }
+        System.out.println("> " + extractName(nodeName));
+
+        DefaultMutableTreeNode node = new DefaultMutableTreeNode(extractName(nodeName));
         // if(depth > maxdepth)
         // return node;
 
-        Iterator<String> subClasses = ob.listSubClasses(nodeName, true);
-        while (subClasses.hasNext()) {
+        for (Iterator<String> subClasses = ob.listSubClasses(nodeName, true); subClasses.hasNext();) {
             String subClassName = ob.getShortName(subClasses.next());
-            if (!subClassName.equals("owl:Nothing"))
+            if (!subClassName.equals("owl:Nothing")) {
                 node.add(createNode(subClassName, ob, depth + 1));
+            }
         }
 
         return node;
     }
 
     private JPanel setupTaggingPanel () {
-        return new JPanel();
+        for (Iterator<String> it = ontoBridge.listInstances("Foto"); it.hasNext();) {
+            photoNamesTag.add(findPhotoName(it.next()));
+        }
+        Collections.sort(photoNamesTag);
+        
+        /* Create the photo label */
+        labelPhotoTag = new JLabel();
+
+        /* Create the photo slider */
+        sliderPhotoTag = new JSlider();
+        sliderPhotoTag.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged (ChangeEvent arg0) {
+                photoCurrentTag = sliderPhotoTag.getValue() - 1;
+                updateInterface();
+            }
+        });
+
+        /* Fill the panel */
+        JPanel panel = new JPanel(new BorderLayout());
+        // panel.add(row, BorderLayout.PAGE_START);
+        panel.add(labelPhotoTag, BorderLayout.CENTER);
+        panel.add(sliderPhotoTag, BorderLayout.PAGE_END);
+        return panel;
     }
 
     private JPanel setupRetrievalPanel () {
         /* Get the names of the available searches and populate a dropdown */
         List<String> queries = obtainQueryNames();
-        comboQueries = new JComboBox(queries.toArray());
+        comboQueries = new JComboBox<String>(queries.toArray(new String[queries.size()]));
 
         /* Create the search button */
         JButton buttonSearch = new JButton("Buscar");
@@ -169,37 +216,94 @@ public final class FamiliaRealFrame extends JFrame {
         row.add(buttonSearch);
 
         /* Create the photo label */
-        labelPhoto = new JLabel();
+        labelPhotoSearch = new JLabel();
+
+        /* Create the photo slider */
+        sliderPhotoSearch = new JSlider();
+        sliderPhotoSearch.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged (ChangeEvent arg0) {
+                photoCurrentSearch = sliderPhotoSearch.getValue() - 1;
+                updateInterface();
+            }
+        });
 
         /* Fill the panel */
         JPanel panel = new JPanel(new BorderLayout());
         panel.add(row, BorderLayout.PAGE_START);
-        panel.add(labelPhoto, BorderLayout.CENTER);
+        panel.add(labelPhotoSearch, BorderLayout.CENTER);
+        panel.add(sliderPhotoSearch, BorderLayout.PAGE_END);
         return panel;
     }
 
-    private void updateInterface () {
-        if (photoCurrent >= photoNames.size()) {
-            photoCurrent = photoNames.size() - 1;
+    /* package */void updateInterface () {
+        /* Slider for search */
+        if (photoCurrentSearch >= photoNamesSearch.size()) {
+            photoCurrentSearch = photoNamesSearch.size() - 1;
         }
-        if (photoCurrent < 0) {
-            photoCurrent = 0;
+        if (photoCurrentSearch < 0) {
+            photoCurrentSearch = 0;
         }
 
-        if (photoNames.isEmpty()) {
-            labelPhoto.setIcon(null);
+        /* Slider for tagging */
+        if (photoCurrentTag >= photoNamesTag.size()) {
+            photoCurrentTag = photoNamesTag.size() - 1;
+        }
+        if (photoCurrentTag < 0) {
+            photoCurrentTag = 0;
+        }
+
+        /* Configure tag slider */
+        String photoNameTag = photoNamesTag.get(photoCurrentTag);
+        labelPhotoTag.setIcon(loadPhotoIcon(photoNameTag));
+        sliderPhotoTag.setMinimum(1);
+        sliderPhotoTag.setMaximum(photoNamesTag.size());
+        sliderPhotoTag.setValue(photoCurrentTag + 1);
+        sliderPhotoTag.setEnabled(true);
+
+        /* Configure search slider */
+        if (photoNamesSearch.isEmpty()) {
+            labelPhotoSearch.setIcon(null);
 
         } else {
-            String photoName = photoNames.get(photoCurrent);
-            labelPhoto.setIcon(loadPhotoIcon(photoName));
+            String photoNameSearch = photoNamesSearch.get(photoCurrentSearch);
+            labelPhotoSearch.setIcon(loadPhotoIcon(photoNameSearch));
+        }
+
+        if (photoNamesSearch.size() > 1) {
+            sliderPhotoSearch.setMinimum(1);
+            sliderPhotoSearch.setMaximum(photoNamesSearch.size());
+            sliderPhotoSearch.setValue(photoCurrentSearch + 1);
+            sliderPhotoSearch.setEnabled(true);
+
+        } else {
+            sliderPhotoSearch.setMinimum(0);
+            sliderPhotoSearch.setMaximum(0);
+            sliderPhotoSearch.setValue(0);
+            sliderPhotoSearch.setEnabled(false);
         }
     }
 
     private Icon loadPhotoIcon (String photoName) {
+        if (photoIcons.containsKey(photoName)) {
+            return photoIcons.get(photoName);
+        }
+
         try {
-            String photoPath = "/photos/" + photoName;
-            Image photoImage = ImageIO.read(FamiliaRealFrame.class.getResource(photoPath));
-            return new ImageIcon(photoImage);
+            String photoPath = "/photos/" + extractName(photoName);
+            URL photoUrl = FamiliaRealFrame.class.getResource(photoPath);
+
+            System.out.printf("Photo %s -> %s -> %s%n", photoName, photoPath, photoUrl);
+
+            if (photoUrl == null) {
+                return new ImageIcon();
+            } else {
+                Image photoImage = ImageIO.read(photoUrl);
+                Icon photoIcon = new ImageIcon(photoImage);
+
+                photoIcons.put(photoName, photoIcon);
+                return photoIcon;
+            }
 
         } catch (IOException exc) {
             exc.printStackTrace();
@@ -213,7 +317,7 @@ public final class FamiliaRealFrame extends JFrame {
         for (Iterator<String> it = ontoBridge.listSubClasses("Foto", false); it.hasNext();) {
             String query = extractName(it.next());
             // Special case, class "Nothing", which is not ours
-            if (!("Nothing").equals(query)) {
+            if (!("owl:Nothing").equals(query)) {
                 queries.add(query);
             }
         }
@@ -223,8 +327,8 @@ public final class FamiliaRealFrame extends JFrame {
     }
 
     /* package */void performSearch () {
-        photoNames.clear();
-        photoCurrent = 0;
+        photoNamesSearch.clear();
+        photoCurrentSearch = 0;
 
         String query = comboQueries.getSelectedItem().toString();
         System.out.printf("Finding photos for '%s'...%n", query);
@@ -233,28 +337,32 @@ public final class FamiliaRealFrame extends JFrame {
             String instance = extractName(it.next());
 
             String photoName = findPhotoName(instance);
-            photoNames.add(photoName);
+            photoNamesSearch.add(photoName);
             System.out.println(instance);
         }
 
-        Collections.sort(photoNames);
+        Collections.sort(photoNamesSearch);
+        updateInterface();
     }
 
     private String findPhotoName (String instance) {
         System.out.printf("Finding photo name (URL) for '%s'...%n", instance);
-        
-        for (Iterator<String> it = ontoBridge.listInstanceProperties(instance); it.hasNext();) {
-            System.out.println(it.next());
+
+        for (Iterator<String> it = ontoBridge.listPropertyValue(instance, "tieneURL"); it.hasNext();) {
+            String photoName = it.next();
+            System.out.printf("%s -> %s%n", instance, photoName);
+            return photoName;
         }
-        
+
+        System.out.printf("%s -> NOT FOUND%n", instance);
         return "";
     }
 
-
-    private static String extractName (String name) {
-        return name.substring(name.lastIndexOf("#") + 1);
+    private String extractName (String name) {
+        return ontoBridge.getShortName(name);// name.substring(name.lastIndexOf("#")
+                                             // + 1);
     }
-    
+
     /**
      * Cell renderer for the ontology tree.
      * 
