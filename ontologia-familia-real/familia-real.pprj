@@ -1,4 +1,4 @@
-; Sun Jun 15 12:32:03 CEST 2014
+; Sun Jun 15 12:58:43 CEST 2014
 ; 
 ;+ (version "3.5")
 ;+ (build "Build 663")
@@ -6,11 +6,11 @@
 ([BROWSER_SLOT_NAMES] of  Property_List
 
 	(properties
-		[familia-real_ProjectKB_Class10163]
-		[familia-real_ProjectKB_Class10164]
-		[familia-real_ProjectKB_Class10165]
-		[familia-real_ProjectKB_Class10166]
-		[familia-real_ProjectKB_Class10167]))
+		[familia-real_ProjectKB_Class13755]
+		[familia-real_ProjectKB_Class13756]
+		[familia-real_ProjectKB_Class13757]
+		[familia-real_ProjectKB_Class13758]
+		[familia-real_ProjectKB_Class13759]))
 
 ([CLSES_TAB] of  Widget
 
@@ -38,31 +38,6 @@
 ([familia-real_ProjectKB_Class10] of  Property_List
 )
 
-([familia-real_ProjectKB_Class10163] of  String
-
-	(name "http://www.w3.org/2002/07/owl#Class")
-	(string_value "%3ANAME"))
-
-([familia-real_ProjectKB_Class10164] of  String
-
-	(name ":INSTANCE-ANNOTATION")
-	(string_value "%3AANNOTATION-TEXT"))
-
-([familia-real_ProjectKB_Class10165] of  String
-
-	(name ":META-CLASS")
-	(string_value "%3ANAME"))
-
-([familia-real_ProjectKB_Class10166] of  String
-
-	(name ":PAL-CONSTRAINT")
-	(string_value "%3APAL-NAME"))
-
-([familia-real_ProjectKB_Class10167] of  String
-
-	(name "http://www.w3.org/2002/07/owl#Thing")
-	(string_value "%3ANAME"))
-
 ([familia-real_ProjectKB_Class11] of  Widget
 
 	(is_hidden TRUE)
@@ -77,6 +52,31 @@
 	(is_hidden TRUE)
 	(property_list [familia-real_ProjectKB_Class14])
 	(widget_class_name "edu.stanford.smi.protegex.widget.pal.PalConstraintsTab"))
+
+([familia-real_ProjectKB_Class13755] of  String
+
+	(name "http://www.w3.org/2002/07/owl#Class")
+	(string_value "%3ANAME"))
+
+([familia-real_ProjectKB_Class13756] of  String
+
+	(name ":INSTANCE-ANNOTATION")
+	(string_value "%3AANNOTATION-TEXT"))
+
+([familia-real_ProjectKB_Class13757] of  String
+
+	(name ":META-CLASS")
+	(string_value "%3ANAME"))
+
+([familia-real_ProjectKB_Class13758] of  String
+
+	(name ":PAL-CONSTRAINT")
+	(string_value "%3APAL-NAME"))
+
+([familia-real_ProjectKB_Class13759] of  String
+
+	(name "http://www.w3.org/2002/07/owl#Thing")
+	(string_value "%3ANAME"))
 
 ([familia-real_ProjectKB_Class14] of  Property_List
 )
